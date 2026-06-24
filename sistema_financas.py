@@ -9,9 +9,8 @@ ctk.set_default_color_theme ("blue")
 # PALETA DE CORES
 
 COR_FUNDO = "#D2D2D2"
-COR_TITULO =  "#238B1C"
-COR_MENU = "#B1B1B1"
-COR_BORDA =  "#196513"
+COR_TITULO =  "#FFFFFF"
+COR_MENU = "#577B54"
 
 # CONTAINER (JANELA) PRINCIPAL
 
