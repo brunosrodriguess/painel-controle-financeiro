@@ -13,17 +13,17 @@ COR_TITULO =  "#FFFFFF"
 COR_MENU = "#577B54"
 COR_TEXTO =  "#000000"
 
-# CONTAINER (JANELA) PRINCIPAL
+# JANELA PRINCIPAL
 
-janela = ctk.CTk ()
-janela.title ("Painel de Controle Financeiro")
-janela.geometry ("1300x700")
-janela.resizable (False, False)
-janela.configure (fg_color = COR_FUNDO)
+janela_principal = ctk.CTk ()
+janela_principal.title ("Painel de Controle Financeiro")
+janela_principal.geometry ("1300x700")
+janela_principal.resizable (False, False)
+janela_principal.configure (fg_color = COR_FUNDO)
 
-# CONTAINER (FRAME) SUPERIOR
+# FRAME SUPERIOR
 
-frame_superior = ctk.CTkFrame (janela,
+frame_superior = ctk.CTkFrame (janela_principal,
     width = 1300,
     height = 110,
     fg_color = COR_MENU)
@@ -32,31 +32,27 @@ frame_superior.pack (padx = 0, pady = 0)
 
 frame_superior.pack_propagate(False)
 
-# BOTÕES CONTAINER SUPERIOR
+# TÍTULO FRAME SUPERIOR
 
-botao_lancamento = ctk.CTkButton (frame_superior,
-    text = "Lançamento",
-    width = 156,
-    height = 51,
-    corner_radius = 15,
-    fg_color = COR_FUNDO,
-    text_color = COR_TEXTO,
-    hover_color = COR_TITULO,
-    font = ("Roboto", 18, "normal"))
+titulo_frame_superior = ctk.CTkLabel (frame_superior,
+    text = "PAINEL DE CONTROLE FINANCEIRO", 
+    font = ("Roboto", 30, "bold"),
+    text_color = COR_TITULO)
 
-botao_lancamento.pack (side = "right", padx = 20)
+titulo_frame_superior.pack (side = "left", padx = 40)
 
-botao_resumo = ctk.CTkButton (frame_superior,
-    text = "Resumo",
-    width = 156,
-    height = 51,
-    corner_radius = 15,
-    fg_color = COR_FUNDO,
-    text_color = COR_TEXTO,
-    hover_color = COR_TITULO,
-    font = ("Roboto", 18, "normal"))
+# BOTÕES FRAME SUPERIOR
 
-botao_resumo.pack (side = "right", padx = 20)
+def mostrar_janela_lancamento():
+    janela_botao_lancamento.tkraise()
+
+def mostrar_janela_resumo():
+    janela_botao_resumo.tkraise()
+
+def mostrar_janela_historico():
+    janela_botao_historico.tkraise()
+
+## BOTÃO HISTÓRICO
 
 botao_historico = ctk.CTkButton (frame_superior,
     text = "Histórico",
@@ -66,17 +62,91 @@ botao_historico = ctk.CTkButton (frame_superior,
     fg_color = COR_FUNDO,
     text_color = COR_TEXTO,
     hover_color = COR_TITULO,
+    command = mostrar_janela_historico,
     font = ("Roboto", 18, "normal"))
 
 botao_historico.pack (side = "right", padx = 20)
 
-# TÍTULO (LABEL) CONTAINER SUPERIOR
+## BOTÃO RESUMO
 
-titulo = ctk.CTkLabel (frame_superior,
-    text = "PAINEL DE CONTROLE FINANCEIRO", 
-    font = ("Roboto", 30, "bold"),
-    text_color = COR_TITULO)
+botao_resumo = ctk.CTkButton (frame_superior,
+    text = "Resumo",
+    width = 156,
+    height = 51,
+    corner_radius = 15,
+    fg_color = COR_FUNDO,
+    text_color = COR_TEXTO,
+    hover_color = COR_TITULO,
+    command = mostrar_janela_resumo,
+    font = ("Roboto", 18, "normal"))
 
-titulo.pack (side = "left", padx = 40)
+botao_resumo.pack (side = "right", padx = 20)
 
-janela.mainloop()
+## BOTÃO LANCAMENTO
+
+botao_lancamento = ctk.CTkButton (frame_superior,
+    text = "Lançamento",
+    width = 156,
+    height = 51,
+    corner_radius = 15,
+    fg_color = COR_FUNDO,
+    text_color = COR_TEXTO,
+    hover_color = COR_TITULO,
+    command = mostrar_janela_lancamento,
+    font = ("Roboto", 18, "normal"))
+
+botao_lancamento.pack (side = "right", padx = 20)
+
+# JANELA DOS BOTÕES
+
+janela_botoes = ctk.CTkFrame (janela_principal,
+   fg_color = COR_FUNDO) 
+
+janela_botoes.pack (fill = "both", expand = True)
+
+## BOTÃO LANCAMENTO
+
+janela_botao_lancamento = ctk.CTkFrame (janela_botoes,
+    fg_color = COR_FUNDO)
+
+label_botao_lancamento = ctk.CTkLabel (janela_botao_lancamento,
+    text = "LANCAMENTO",
+    text_color = COR_TEXTO,
+    font = ("Roboto", 30, "bold"))
+
+label_botao_lancamento.pack (pady = 30)
+
+## BOTÃO RESUMO
+
+janela_botao_resumo = ctk.CTkFrame (janela_botoes,
+    fg_color = COR_FUNDO)
+
+label_botao_resumo = ctk.CTkLabel (janela_botao_resumo,
+    text = "RESUMO",
+    text_color = COR_TEXTO,
+    font = ("Roboto", 30, "bold"))
+
+label_botao_resumo.pack (pady = 30)
+
+## BOTÃO HISTÓRICO
+
+janela_botao_historico = ctk.CTkFrame (janela_botoes,
+    fg_color = COR_FUNDO)
+
+label_botao_historico = ctk.CTkLabel (janela_botao_historico,
+    text = "HISTORICO",
+    text_color = COR_TEXTO,
+    font = ("Roboto", 30, "bold"))
+
+label_botao_historico.pack (pady = 30)
+
+## AJUSTE DIMENSÃO JANELA DOS BOTÕES
+
+janela_botao_lancamento.place ( relwidth = 1, relheight = 1)
+
+janela_botao_resumo.place ( relwidth = 1, relheight = 1)
+
+janela_botao_historico.place ( relwidth = 1, relheight = 1)
+
+mostrar_janela_lancamento()
+janela_principal.mainloop()
