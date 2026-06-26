@@ -12,6 +12,24 @@ COR_FUNDO = "#D2D2D2"
 COR_TITULO =  "#FFFFFF"
 COR_MENU = "#577B54"
 COR_TEXTO =  "#000000"
+COR_TEXTO_JANELA = "#5F5F5F"
+COR_CAMPOS = "#E8E8E8"
+
+# PADRÕES DE INTERFACE JANELA LANCAMENTO
+
+LARGURA_CAMPOS_LANCAMENTO = 280
+ALTURA_CAMPOS_LANCAMENTO = 46
+
+# FUNÇÃO BOTÕES FRAME SUPERIOR
+
+def mostrar_janela_lancamento():
+    janela_botao_lancamento.tkraise()
+
+def mostrar_janela_resumo():
+    janela_botao_resumo.tkraise()
+
+def mostrar_janela_historico():
+    janela_botao_historico.tkraise()
 
 # JANELA PRINCIPAL
 
@@ -40,17 +58,6 @@ titulo_frame_superior = ctk.CTkLabel (frame_superior,
     text_color = COR_TITULO)
 
 titulo_frame_superior.pack (side = "left", padx = 40)
-
-# BOTÕES FRAME SUPERIOR
-
-def mostrar_janela_lancamento():
-    janela_botao_lancamento.tkraise()
-
-def mostrar_janela_resumo():
-    janela_botao_resumo.tkraise()
-
-def mostrar_janela_historico():
-    janela_botao_historico.tkraise()
 
 ## BOTÃO HISTÓRICO
 
@@ -104,7 +111,7 @@ janela_botoes = ctk.CTkFrame (janela_principal,
 
 janela_botoes.pack (fill = "both", expand = True)
 
-## BOTÃO LANCAMENTO
+## JANELA LANCAMENTO
 
 janela_botao_lancamento = ctk.CTkFrame (janela_botoes,
     fg_color = COR_FUNDO)
@@ -116,7 +123,24 @@ label_botao_lancamento = ctk.CTkLabel (janela_botao_lancamento,
 
 label_botao_lancamento.pack (pady = 30)
 
-## BOTÃO RESUMO
+titulo_descricao = ctk.CTkLabel (janela_botao_lancamento,
+    text = "Descrição",
+    text_color = COR_TEXTO_JANELA,
+    font = ("Roboto", 24, "normal"))
+
+titulo_descricao.grid (row = 0, column = 0)
+
+entry_descricao = ctk.CTkEntry (janela_botao_lancamento,
+    placeholder_text = "Ex: Supermercado Tauste",
+    fg_color = COR_CAMPOS,
+    font = ("Roboto", 15, "normal"),
+    text_color = COR_TEXTO_JANELA,
+    height = 46,
+    width = 280)
+
+entry_descricao.grid (row = 1, column = 0)
+
+## JANELA RESUMO
 
 janela_botao_resumo = ctk.CTkFrame (janela_botoes,
     fg_color = COR_FUNDO)
@@ -128,7 +152,7 @@ label_botao_resumo = ctk.CTkLabel (janela_botao_resumo,
 
 label_botao_resumo.pack (pady = 30)
 
-## BOTÃO HISTÓRICO
+## JANELA HISTÓRICO
 
 janela_botao_historico = ctk.CTkFrame (janela_botoes,
     fg_color = COR_FUNDO)
