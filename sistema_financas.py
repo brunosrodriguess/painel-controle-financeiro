@@ -19,6 +19,13 @@ COR_CAMPOS = "#E8E8E8"
 
 LARGURA_CAMPOS_LANCAMENTO = 280
 ALTURA_CAMPOS_LANCAMENTO = 46
+MARGEM_Y_TOPO = (22,11)
+MARGEM_Y =  11
+MARGEM_X = 87
+FONTE = "Roboto"
+FONTE_LABEL = ("Roboto", 24, "normal")
+FONTE_ENTRY = ("Roboto", 15, "normal")
+ALINHAMENTO = "w"
 
 # FUNÇÃO BOTÕES FRAME SUPERIOR
 
@@ -116,29 +123,22 @@ janela_botoes.pack (fill = "both", expand = True)
 janela_botao_lancamento = ctk.CTkFrame (janela_botoes,
     fg_color = COR_FUNDO)
 
-label_botao_lancamento = ctk.CTkLabel (janela_botao_lancamento,
-    text = "LANCAMENTO",
-    text_color = COR_TEXTO,
-    font = ("Roboto", 30, "bold"))
-
-label_botao_lancamento.pack (pady = 30)
-
 titulo_descricao = ctk.CTkLabel (janela_botao_lancamento,
     text = "Descrição",
     text_color = COR_TEXTO_JANELA,
-    font = ("Roboto", 24, "normal"))
+    font = (FONTE_LABEL))
 
-titulo_descricao.grid (row = 0, column = 0)
+titulo_descricao.grid (row = 0, column = 1, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y_TOPO)
 
 entry_descricao = ctk.CTkEntry (janela_botao_lancamento,
     placeholder_text = "Ex: Supermercado Tauste",
     fg_color = COR_CAMPOS,
-    font = ("Roboto", 15, "normal"),
+    font = (FONTE_ENTRY),
     text_color = COR_TEXTO_JANELA,
-    height = 46,
-    width = 280)
+    height = ALTURA_CAMPOS_LANCAMENTO,
+    width = LARGURA_CAMPOS_LANCAMENTO)
 
-entry_descricao.grid (row = 1, column = 0)
+entry_descricao.grid (row = 1, column = 1, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
 
 ## JANELA RESUMO
 
