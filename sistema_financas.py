@@ -31,7 +31,8 @@ ARREDONDAMENTO = 15
 
 ## VARIÁVEIS LISTA SUSPENSA JANELA LANCAMENTO
 
-TEXTO_PADRÃO_CATEGORIA = "Selecione uma categoria"
+TEXTO_PADRAO_CATEGORIA = "Selecione uma categoria"
+TEXTO_PADRAO_SUBCATEGORIA = "Selecione uma subcategoria"
 
 CATEGORIAS = [
     "Alimentação",
@@ -44,8 +45,7 @@ CATEGORIAS = [
     "Assinaturas",
 ]
 
-
-SUBCATEGORIA_ALIMENTACAO = [
+SUBCATEGORIAS_ALIMENTACAO = [
     "Mercado",
     "Padaria",
     "Restaurante",
@@ -54,7 +54,7 @@ SUBCATEGORIA_ALIMENTACAO = [
     "Feira",
 ]
 
-SUBCATEGORIA_MORADIA = [
+SUBCATEGORIAS_MORADIA = [
     "Aluguel",
     "Condomínio",
     "Água",
@@ -65,7 +65,7 @@ SUBCATEGORIA_MORADIA = [
     "Manutenção",
 ]
 
-SUBCATEGORIA_TRANSPORTE = [
+SUBCATEGORIAS_TRANSPORTE = [
     "Gasolina",
     "Etanol",
     "Diesel",
@@ -78,7 +78,7 @@ SUBCATEGORIA_TRANSPORTE = [
     "Seguro",
 ]
 
-SUBCATEGORIA_SAUDE = [
+SUBCATEGORIAS_SAUDE = [
     "Farmácia",
     "Médico",
     "Dentista",
@@ -86,14 +86,14 @@ SUBCATEGORIA_SAUDE = [
     "Plano de Saúde",
 ]
 
-SUBCATEGORIA_EDUCACAO = [
+SUBCATEGORIAS_EDUCACAO = [
     "Faculdade",
     "Curso",
     "Livros",
     "Material Escolar",
 ]
 
-SUBCATEGORIA_LAZER = [
+SUBCATEGORIAS_LAZER = [
     "Cinema",
     "Viagem",
     "Jogos",
@@ -102,7 +102,7 @@ SUBCATEGORIA_LAZER = [
     "Passeios",
 ]
 
-SUBCATEGORIA_COMPRAS = [
+SUBCATEGORIAS_COMPRAS = [
     "Roupas",
     "Eletrônicos",
     "Casa",
@@ -115,7 +115,7 @@ SUBCATEGORIA_COMPRAS = [
     "Fundos",
 ]
 
-SUBCATEGORIA_ASSINATURAS = [
+SUBCATEGORIAS_ASSINATURAS = [
     "Netflix",
     "Amazon Prime Video",
     "Disney+",
@@ -162,6 +162,16 @@ SUBCATEGORIA_ASSINATURAS = [
     "Strava Premium",
 ]
 
+SUBCATEGORIAS = {
+    "Alimentação" : SUBCATEGORIAS_ALIMENTACAO,
+    "Moradia" : SUBCATEGORIAS_MORADIA,
+    "Transporte" : SUBCATEGORIAS_TRANSPORTE,
+    "Saúde" : SUBCATEGORIAS_SAUDE,
+    "Educação" : SUBCATEGORIAS_EDUCACAO,
+    "Lazer" : SUBCATEGORIAS_LAZER,
+    "Compras" : SUBCATEGORIAS_COMPRAS,
+    "Assinaturas" : SUBCATEGORIAS_ASSINATURAS
+}
 
 # FUNÇÃO BOTÕES FRAME SUPERIOR
 
@@ -173,6 +183,13 @@ def mostrar_janela_resumo():
 
 def mostrar_janela_historico():
     janela_botao_historico.tkraise()
+
+# FUNÇÃO BOTÃO SUBCATEGORIA JANELA LANCAMENTO
+
+def carregar_subcategoria(categoria):
+    subcategorias = SUBCATEGORIAS[categoria]
+    combobox_subcategoria.configure (values = subcategorias)
+    combobox_subcategoria.set (TEXTO_PADRAO_SUBCATEGORIA)
 
 # JANELA PRINCIPAL
 
@@ -291,9 +308,10 @@ combobox_categoria = ctk.CTkComboBox (janela_botao_lancamento,
     height = ALTURA_CAMPOS_LANCAMENTO,
     width = LARGURA_CAMPOS_LANCAMENTO,
     corner_radius = ARREDONDAMENTO,
+    command = carregar_subcategoria,
     values = CATEGORIAS)
 
-combobox_categoria.set (TEXTO_PADRÃO_CATEGORIA)
+combobox_categoria.set (TEXTO_PADRAO_CATEGORIA)
 
 combobox_categoria.grid (row = 3, column = 1, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
 
@@ -302,7 +320,7 @@ titulo_subcategoria = ctk.CTkLabel (janela_botao_lancamento,
     text_color = COR_TEXTO_JANELA,
     font = FONTE_LABEL)
 
-titulo_subcategoria.grid (row = 2, column = 1, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y_TOPO)
+titulo_subcategoria.grid (row = 4, column = 1, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y_TOPO)
 
 combobox_subcategoria = ctk.CTkComboBox (janela_botao_lancamento,
     fg_color = COR_CAMPOS,
@@ -311,16 +329,11 @@ combobox_subcategoria = ctk.CTkComboBox (janela_botao_lancamento,
     height = ALTURA_CAMPOS_LANCAMENTO,
     width = LARGURA_CAMPOS_LANCAMENTO,
     corner_radius = ARREDONDAMENTO,
-    values = )
+    values = [])
 
-combobox_subcategoria.set (TEXTO_PADRÃO_CATEGORIA)
+combobox_subcategoria.set (TEXTO_PADRAO_SUBCATEGORIA)
 
-combobox_subcategoria.grid (row = 3, column = 1, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
-
-
-def carregar_subcategoria (categoria):
-    categoria = combobox_categoria.get ()
-    if categoria ==
+combobox_subcategoria.grid (row = 5, column = 1, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
 
 
 
