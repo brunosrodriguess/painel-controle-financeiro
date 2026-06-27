@@ -12,7 +12,7 @@ COR_FUNDO = "#D2D2D2"
 COR_TITULO =  "#FFFFFF"
 COR_MENU = "#577B54"
 COR_TEXTO =  "#000000"
-COR_TEXTO_JANELA = "#5F5F5F"
+COR_TEXTO_JANELA = "#000000"
 COR_CAMPOS = "#E8E8E8"
 
 # PADRÕES DE INTERFACE JANELA LANCAMENTO
@@ -25,7 +25,143 @@ MARGEM_X = 87
 FONTE = "Roboto"
 FONTE_LABEL = ("Roboto", 24, "normal")
 FONTE_ENTRY = ("Roboto", 15, "normal")
+FONTE_COMBOBOX = ("Roboto", 15, "normal")
 ALINHAMENTO = "w"
+ARREDONDAMENTO = 15
+
+## VARIÁVEIS LISTA SUSPENSA JANELA LANCAMENTO
+
+TEXTO_PADRÃO_CATEGORIA = "Selecione uma categoria"
+
+CATEGORIAS = [
+    "Alimentação",
+    "Moradia",
+    "Transporte",
+    "Saúde",
+    "Educação",
+    "Lazer",
+    "Compras",
+    "Assinaturas",
+]
+
+
+SUBCATEGORIA_ALIMENTACAO = [
+    "Mercado",
+    "Padaria",
+    "Restaurante",
+    "Lanche",
+    "Delivery",
+    "Feira",
+]
+
+SUBCATEGORIA_MORADIA = [
+    "Aluguel",
+    "Condomínio",
+    "Água",
+    "Energia",
+    "Internet",
+    "IPTU",
+    "Gás",
+    "Manutenção",
+]
+
+SUBCATEGORIA_TRANSPORTE = [
+    "Gasolina",
+    "Etanol",
+    "Diesel",
+    "Uber",
+    "Táxi",
+    "Ônibus",
+    "Pedágio",
+    "Estacionamento",
+    "Manutenção",
+    "Seguro",
+]
+
+SUBCATEGORIA_SAUDE = [
+    "Farmácia",
+    "Médico",
+    "Dentista",
+    "Exames",
+    "Plano de Saúde",
+]
+
+SUBCATEGORIA_EDUCACAO = [
+    "Faculdade",
+    "Curso",
+    "Livros",
+    "Material Escolar",
+]
+
+SUBCATEGORIA_LAZER = [
+    "Cinema",
+    "Viagem",
+    "Jogos",
+    "Streaming",
+    "Eventos",
+    "Passeios",
+]
+
+SUBCATEGORIA_COMPRAS = [
+    "Roupas",
+    "Eletrônicos",
+    "Casa",
+    "Presentes",
+    "Investimentos",
+    "Ações",
+    "Tesouro Direto",
+    "CDB",
+    "Criptomoedas",
+    "Fundos",
+]
+
+SUBCATEGORIA_ASSINATURAS = [
+    "Netflix",
+    "Amazon Prime Video",
+    "Disney+",
+    "HBO Max",
+    "Apple TV+",
+    "Paramount+",
+    "Globoplay",
+    "MUBI",
+    "Crunchyroll",
+    "Looke",
+    "Telecine",
+    "Spotify",
+    "YouTube Music",
+    "Apple Music",
+    "Deezer",
+    "Tidal",
+    "Amazon Music",
+    "Xbox Game Pass",
+    "PlayStation Plus",
+    "Nintendo Switch Online",
+    "EA Play",
+    "Ubisoft+",
+    "GeForce NOW",
+    "Google One",
+    "iCloud",
+    "Dropbox",
+    "OneDrive",
+    "MEGA",
+    "ChatGPT",
+    "Claude Pro",
+    "Gemini Advanced",
+    "Perplexity Pro",
+    "GitHub Copilot",
+    "Midjourney",
+    "Microsoft 365",
+    "Google Workspace",
+    "Notion",
+    "Canva Pro",
+    "Adobe Creative Cloud",
+    "Kindle Unlimited",
+    "Audible",
+    "Duolingo Super",
+    "LinkedIn Premium",
+    "Strava Premium",
+]
+
 
 # FUNÇÃO BOTÕES FRAME SUPERIOR
 
@@ -126,19 +262,103 @@ janela_botao_lancamento = ctk.CTkFrame (janela_botoes,
 titulo_descricao = ctk.CTkLabel (janela_botao_lancamento,
     text = "Descrição",
     text_color = COR_TEXTO_JANELA,
-    font = (FONTE_LABEL))
+    font = FONTE_LABEL)
 
 titulo_descricao.grid (row = 0, column = 1, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y_TOPO)
 
 entry_descricao = ctk.CTkEntry (janela_botao_lancamento,
     placeholder_text = "Ex: Supermercado Tauste",
     fg_color = COR_CAMPOS,
-    font = (FONTE_ENTRY),
+    font = FONTE_ENTRY,
     text_color = COR_TEXTO_JANELA,
     height = ALTURA_CAMPOS_LANCAMENTO,
-    width = LARGURA_CAMPOS_LANCAMENTO)
+    width = LARGURA_CAMPOS_LANCAMENTO,
+    corner_radius = ARREDONDAMENTO)
 
 entry_descricao.grid (row = 1, column = 1, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
+
+titulo_categoria = ctk.CTkLabel (janela_botao_lancamento,
+    text = "Categoria",
+    text_color = COR_TEXTO_JANELA,
+    font = FONTE_LABEL)
+
+titulo_categoria.grid (row = 2, column = 1, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y_TOPO)
+
+combobox_categoria = ctk.CTkComboBox (janela_botao_lancamento,
+    fg_color = COR_CAMPOS,
+    font = FONTE_COMBOBOX,
+    text_color = COR_TEXTO_JANELA,
+    height = ALTURA_CAMPOS_LANCAMENTO,
+    width = LARGURA_CAMPOS_LANCAMENTO,
+    corner_radius = ARREDONDAMENTO,
+    values = CATEGORIAS)
+
+combobox_categoria.set (TEXTO_PADRÃO_CATEGORIA)
+
+combobox_categoria.grid (row = 3, column = 1, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
+
+titulo_subcategoria = ctk.CTkLabel (janela_botao_lancamento,
+    text = "Subcategoria",
+    text_color = COR_TEXTO_JANELA,
+    font = FONTE_LABEL)
+
+titulo_subcategoria.grid (row = 2, column = 1, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y_TOPO)
+
+combobox_subcategoria = ctk.CTkComboBox (janela_botao_lancamento,
+    fg_color = COR_CAMPOS,
+    font = FONTE_COMBOBOX,
+    text_color = COR_TEXTO_JANELA,
+    height = ALTURA_CAMPOS_LANCAMENTO,
+    width = LARGURA_CAMPOS_LANCAMENTO,
+    corner_radius = ARREDONDAMENTO,
+    values = )
+
+combobox_subcategoria.set (TEXTO_PADRÃO_CATEGORIA)
+
+combobox_subcategoria.grid (row = 3, column = 1, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
+
+
+def carregar_subcategoria (categoria):
+    categoria = combobox_categoria.get ()
+    if categoria ==
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## JANELA RESUMO
 
