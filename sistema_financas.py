@@ -19,7 +19,7 @@ COR_CAMPOS = "#E8E8E8"
 
 LARGURA_CAMPOS_LANCAMENTO = 280
 ALTURA_CAMPOS_LANCAMENTO = 46
-MARGEM_Y_TOPO = (22,11)
+MARGEM_Y_TOPO = (50,11)
 MARGEM_Y =  11
 MARGEM_X = 87
 FONTE = "Roboto"
@@ -33,6 +33,8 @@ ARREDONDAMENTO = 15
 
 TEXTO_PADRAO_CATEGORIA = "Selecione uma categoria"
 TEXTO_PADRAO_SUBCATEGORIA = "Selecione uma subcategoria"
+TEXTO_PADRAO_METODO_PAGAMENTO = "Selecione um método"
+TEXTO_PADRAO_CONTA_BANCARIA = "Selecione uma conta"
 
 CATEGORIAS = [
     "Alimentação",
@@ -173,6 +175,32 @@ SUBCATEGORIAS = {
     "Assinaturas" : SUBCATEGORIAS_ASSINATURAS
 }
 
+METODO_PAGAMENTO = [
+    "Dinheiro",
+    "PIX",
+    "Cartão de Débito",
+    "Cartão de Crédito",
+    "Boleto Bancário",
+    "Transferência Bancária (TED/DOC)",
+    "Saldo em Conta",
+    "Carteira Digital",
+    "Vale-Alimentação",
+    "Vale-Refeição"
+]
+
+CONTA_BANCARIA = [
+    "Nubank",
+    "Inter",
+    "Itaú",
+    "Santander",
+    "Banco do Brasil",
+    "Caixa",
+    "Bradesco",
+    "C6 Bank",
+    "Mercado Pago",
+    "PicPay",
+]
+
 # FUNÇÃO BOTÕES FRAME SUPERIOR
 
 def mostrar_janela_lancamento():
@@ -190,6 +218,24 @@ def carregar_subcategoria(categoria):
     subcategorias = SUBCATEGORIAS[categoria]
     combobox_subcategoria.configure (values = subcategorias)
     combobox_subcategoria.set (TEXTO_PADRAO_SUBCATEGORIA)
+
+# FUNÇÃO DIGITAÇÃO DATA JANELA LANCAMENTO
+
+def aplicar_mascara_data (event):
+    data_digitada = entry_data.get()
+    apenas_numeros = ""
+    for caractere in data_digitada:
+        if caractere.isdigit ():
+            apenas_numeros += caractere
+    data_formatada = f"{apenas_numeros[:2]}/{apenas_numeros[2:4]}/{apenas_numeros[4:]}"
+    if len(apenas_numeros) == 2:
+        f"{apenas_numeros}/"
+    elif len(apenas_numeros) <= 4:
+        f"{apenas_numeros}/"
+        
+    
+
+
 
 # JANELA PRINCIPAL
 
@@ -335,12 +381,63 @@ combobox_subcategoria.set (TEXTO_PADRAO_SUBCATEGORIA)
 
 combobox_subcategoria.grid (row = 5, column = 1, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
 
+titulo_metodo_pagamento = ctk.CTkLabel (janela_botao_lancamento,
+    text = "Método de pagamento",
+    text_color = COR_TEXTO_JANELA,
+    font = FONTE_LABEL)
 
+titulo_metodo_pagamento.grid (row = 0, column = 3, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y_TOPO)
 
+combobox_metodo_pagamento = ctk.CTkComboBox (janela_botao_lancamento,
+    fg_color = COR_CAMPOS,
+    font = FONTE_COMBOBOX,
+    text_color = COR_TEXTO_JANELA,
+    height = ALTURA_CAMPOS_LANCAMENTO,
+    width = LARGURA_CAMPOS_LANCAMENTO,
+    corner_radius = ARREDONDAMENTO,
+    values = METODO_PAGAMENTO)
 
+combobox_metodo_pagamento.set (TEXTO_PADRAO_METODO_PAGAMENTO)
 
+combobox_metodo_pagamento.grid (row = 1, column = 3, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
 
+titulo_conta_bancaria = ctk.CTkLabel (janela_botao_lancamento,
+    text = "Conta bancária",
+    text_color = COR_TEXTO_JANELA,
+    font = FONTE_LABEL)
 
+titulo_conta_bancaria.grid (row = 2, column = 3, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y_TOPO)
+
+combobox_conta_bancaria = ctk.CTkComboBox (janela_botao_lancamento,
+    fg_color = COR_CAMPOS,
+    font = FONTE_COMBOBOX,
+    text_color = COR_TEXTO_JANELA,
+    height = ALTURA_CAMPOS_LANCAMENTO,
+    width = LARGURA_CAMPOS_LANCAMENTO,
+    corner_radius = ARREDONDAMENTO,
+    values = CONTA_BANCARIA)
+
+combobox_conta_bancaria.set (TEXTO_PADRAO_CONTA_BANCARIA)
+
+combobox_conta_bancaria.grid (row = 3, column = 3, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
+
+titulo_data = ctk.CTkLabel (janela_botao_lancamento,
+    text = "Data",
+    text_color = COR_TEXTO_JANELA,
+    font = FONTE_LABEL)
+
+titulo_data.grid (row = 4, column = 3, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y_TOPO)
+
+entry_data = ctk.CTkEntry (janela_botao_lancamento,
+    placeholder_text = "Ex: 26/03/2026",
+    fg_color = COR_CAMPOS,
+    font = FONTE_ENTRY,
+    text_color = COR_TEXTO_JANELA,
+    height = ALTURA_CAMPOS_LANCAMENTO,
+    width = LARGURA_CAMPOS_LANCAMENTO,
+    corner_radius = ARREDONDAMENTO)
+
+entry_data.grid (row = 5, column = 3, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
 
 
 
