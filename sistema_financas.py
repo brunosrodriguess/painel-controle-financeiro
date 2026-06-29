@@ -12,8 +12,14 @@ COR_FUNDO = "#D2D2D2"
 COR_TITULO =  "#FFFFFF"
 COR_MENU = "#577B54"
 COR_TEXTO =  "#000000"
+COR_TEXTO_LANCAR = "#FFFFFF"
+COR_TEXTO_LIMPAR = "#FFFFFF"
 COR_TEXTO_JANELA = "#000000"
 COR_CAMPOS = "#E8E8E8"
+COR_BOTAO_LANCAR = "#3A7B34"
+COR_BOTAO_LIMPAR = "#616774"
+COR_INTERACAO_LANCAR = "#30672A"
+COR_INTERACAO_LIMPAR = "#393D44"
 
 # PADRÕES DE INTERFACE JANELA LANCAMENTO
 
@@ -26,6 +32,8 @@ FONTE = "Roboto"
 FONTE_LABEL = ("Roboto", 24, "normal")
 FONTE_ENTRY = ("Roboto", 15, "normal")
 FONTE_COMBOBOX = ("Roboto", 15, "normal")
+FONTE_BOTAO_LANCAR = ("Roboto", 17, "bold")
+FONTE_BOTAO_LIMPAR = ("Roboto", 17, "bold")
 ALINHAMENTO = "w"
 ARREDONDAMENTO = 15
 
@@ -223,19 +231,49 @@ def carregar_subcategoria(categoria):
 
 def aplicar_mascara_data (event):
     data_digitada = entry_data.get()
-    apenas_numeros = ""
     for caractere in data_digitada:
         if caractere.isdigit ():
             apenas_numeros += caractere
-    data_formatada = f"{apenas_numeros[:2]}/{apenas_numeros[2:4]}/{apenas_numeros[4:]}"
-    if len(apenas_numeros) == 2:
-        f"{apenas_numeros}/"
-    elif len(apenas_numeros) <= 4:
-        f"{apenas_numeros}/"
-        
-    
+    apenas_numeros = apenas_numeros [:8]
+    if len(apenas_numeros) == 0:
+        data_formatada = ""
+    elif len(apenas_numeros) == 1:
+        data_formatada = f"{apenas_numeros[:2]}"
+    elif len(apenas_numeros) == 2:
+        data_formatada = f"{apenas_numeros[:2]}/"
+    elif len(apenas_numeros) == 3:
+        data_formatada = f"{apenas_numeros[:2]}/{apenas_numeros[2:4]}"
+    elif len(apenas_numeros) == 4:
+        data_formatada = f"{apenas_numeros[:2]}/{apenas_numeros[2:4]}/"
+    else:
+        data_formatada = f"{apenas_numeros[:2]}/{apenas_numeros[2:4]}/{apenas_numeros[4:8]}"
 
+    entry_data.delete(0, "end")
+    entry_data.insert(0, data_formatada)
 
+# FUNÇÃO DIGITAÇÃO VALOR JANELA LANCAMENTO
+
+def aplicar_mascara_valor (event):
+    valor_digitado = entry_valor.get()
+    apenas_numeros = ""
+    for caractere in valor_digitado:
+        if caractere.isdigit ():
+            apenas_numeros += caractere
+    apenas_numeros = apenas_numeros [:8]
+    if len(apenas_numeros) == 0:
+        valor_formatado = ""
+    elif len(apenas_numeros) == 1:
+        valor_formatado = f"R$ 0,0{apenas_numeros}"
+    elif len(apenas_numeros) == 2:
+        valor_formatado = f"R$ 0,{apenas_numeros}"
+    else:
+        inteiro = int(apenas_numeros [:-2])
+        decimal = apenas_numeros [-2:]
+        inteiro = f"{inteiro:,}".replace(",", ".")
+        valor_formatado = f"R$ {inteiro},{decimal}"
+
+    entry_valor.delete(0, "end")
+    entry_valor.insert(0, valor_formatado)
 
 # JANELA PRINCIPAL
 
@@ -439,36 +477,51 @@ entry_data = ctk.CTkEntry (janela_botao_lancamento,
 
 entry_data.grid (row = 5, column = 3, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
 
+entry_data.bind ("<KeyRelease>", aplicar_mascara_data)
 
+titulo_valor = ctk.CTkLabel (janela_botao_lancamento,
+    text = "Valor",
+    text_color = COR_TEXTO_JANELA,
+    font = FONTE_LABEL)
 
+titulo_valor.grid (row = 0, column = 5, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y_TOPO)
 
+entry_valor = ctk.CTkEntry (janela_botao_lancamento,
+    placeholder_text = "Ex: R$150,00",
+    fg_color = COR_CAMPOS,
+    font = FONTE_ENTRY,
+    text_color = COR_TEXTO_JANELA,
+    height = ALTURA_CAMPOS_LANCAMENTO,
+    width = LARGURA_CAMPOS_LANCAMENTO,
+    corner_radius = ARREDONDAMENTO)
 
+entry_valor.grid (row = 1, column = 5, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
 
+entry_valor.bind ("<KeyRelease>", aplicar_mascara_valor)
 
+botao_lancar_dados = ctk.CTkButton (janela_botao_lancamento,
+    text = "Lançar Dados",
+    width = LARGURA_CAMPOS_LANCAMENTO,
+    height = ALTURA_CAMPOS_LANCAMENTO,
+    corner_radius = ARREDONDAMENTO,
+    fg_color = COR_BOTAO_LANCAR,
+    text_color = COR_TEXTO_LANCAR,
+    hover_color = COR_INTERACAO_LANCAR,
+    font = FONTE_BOTAO_LANCAR)
 
+botao_lancar_dados.grid (row = 3, column = 5, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
 
+botao_limpar_dados = ctk.CTkButton (janela_botao_lancamento,
+    text = "Limpar Dados",
+    width = LARGURA_CAMPOS_LANCAMENTO,
+    height = ALTURA_CAMPOS_LANCAMENTO,
+    corner_radius = ARREDONDAMENTO,
+    fg_color = COR_BOTAO_LIMPAR,
+    text_color = COR_TEXTO_LIMPAR,
+    hover_color = COR_INTERACAO_LIMPAR,
+    font = FONTE_BOTAO_LIMPAR)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+botao_limpar_dados.grid (row = 5, column = 5, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
 
 ## JANELA RESUMO
 
