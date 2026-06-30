@@ -1,10 +1,34 @@
 import customtkinter as ctk
 from tkinter import messagebox, ttk
+import sqlite3
 
 # CONFIGURAÇÕES
 
 ctk.set_appearance_mode ("system")
 ctk.set_default_color_theme ("blue")
+
+# BANCO DE DADOS
+
+def criar_banco():
+
+    conexao = sqlite3.connect("sistema_financas_historico.db")
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS lancamentos(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            descricao TEXT,
+            categoria TEXT,
+            subcategoria TEXT,
+            metodo_pagamento TEXT,
+            conta_bancaria TEXT,
+            data TEXT,
+            valor REAL
+    )         
+    """)
+
+    conexao.commit()
+    conexao.close()
 
 # PALETA DE CORES
 
@@ -294,7 +318,7 @@ frame_superior.pack (padx = 0, pady = 0)
 
 frame_superior.pack_propagate(False)
 
-# TÍTULO FRAME SUPERIOR
+## TÍTULO FRAME SUPERIOR
 
 titulo_frame_superior = ctk.CTkLabel (frame_superior,
     text = "PAINEL DE CONTROLE FINANCEIRO", 
@@ -523,7 +547,7 @@ botao_limpar_dados = ctk.CTkButton (janela_botao_lancamento,
 
 botao_limpar_dados.grid (row = 5, column = 5, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
 
-## JANELA RESUMO
+# JANELA RESUMO
 
 janela_botao_resumo = ctk.CTkFrame (janela_botoes,
     fg_color = COR_FUNDO)
@@ -535,7 +559,7 @@ label_botao_resumo = ctk.CTkLabel (janela_botao_resumo,
 
 label_botao_resumo.pack (pady = 30)
 
-## JANELA HISTÓRICO
+# JANELA HISTÓRICO
 
 janela_botao_historico = ctk.CTkFrame (janela_botoes,
     fg_color = COR_FUNDO)
@@ -546,6 +570,13 @@ label_botao_historico = ctk.CTkLabel (janela_botao_historico,
     font = ("Roboto", 30, "bold"))
 
 label_botao_historico.pack (pady = 30)
+
+## BANCO DE DADOS HISTÓRICO
+
+
+
+
+
 
 ## AJUSTE DIMENSÃO JANELA DOS BOTÕES
 
