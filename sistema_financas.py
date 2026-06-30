@@ -571,13 +571,6 @@ label_botao_historico = ctk.CTkLabel (janela_botao_historico,
 
 label_botao_historico.pack (pady = 30)
 
-## BANCO DE DADOS HISTÓRICO
-
-
-
-
-
-
 ## AJUSTE DIMENSÃO JANELA DOS BOTÕES
 
 janela_botao_lancamento.place ( relwidth = 1, relheight = 1)
