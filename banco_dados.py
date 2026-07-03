@@ -1,4 +1,10 @@
 import sqlite3
+import os
+
+CAMINHO_BANCO = os.path.join(
+    os.path.dirname(__file__),
+    "sistema_financas_historico.db"
+)
 
 def adicionar_lancamento(
     descricao,
@@ -10,7 +16,7 @@ def adicionar_lancamento(
     valor
 ):
 
-    conexao = sqlite3.connect("sistema_financas_historico.db")
+    conexao = sqlite3.connect(CAMINHO_BANCO)
     cursor = conexao.cursor()
     
     cursor.execute("""

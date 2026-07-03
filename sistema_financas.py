@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from tkinter import messagebox, ttk
 import sqlite3
+import banco_dados
 
 # CONFIGURAÇÕES
 
@@ -11,7 +12,7 @@ ctk.set_default_color_theme ("blue")
 
 def criar_banco():
 
-    conexao = sqlite3.connect("sistema_financas_historico.db")
+    conexao = sqlite3.connect(CAMINHO_BANCO)
     cursor = conexao.cursor()
 
     cursor.execute("""
@@ -29,6 +30,25 @@ def criar_banco():
 
     conexao.commit()
     conexao.close()
+
+def salvar_lancamento():
+    descricao = entry_descricao.get()
+    categoria = combobox_categoria.get()
+    subcategoria = combobox_subcategoria.get()
+    metodo_pagamento = combobox_metodo_pagamento.get()
+    conta_bancaria = combobox_conta_bancaria.get()
+    data = entry_data.get()
+    valor = entry_valor.get()
+
+    banco_dados.adicionar_lancamento(
+        descricao,
+        categoria,
+        subcategoria,
+        metodo_pagamento,
+        conta_bancaria,
+        data,
+        valor
+    )
 
 # PALETA DE CORES
 
@@ -531,7 +551,8 @@ botao_lancar_dados = ctk.CTkButton (janela_botao_lancamento,
     fg_color = COR_BOTAO_LANCAR,
     text_color = COR_TEXTO_LANCAR,
     hover_color = COR_INTERACAO_LANCAR,
-    font = FONTE_BOTAO_LANCAR)
+    font = FONTE_BOTAO_LANCAR,
+    command = salvar_lancamento)
 
 botao_lancar_dados.grid (row = 3, column = 5, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
 
