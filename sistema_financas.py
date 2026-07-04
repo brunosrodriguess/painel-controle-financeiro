@@ -1,6 +1,5 @@
 import customtkinter as ctk
 from tkinter import messagebox, ttk
-import sqlite3
 import banco_dados
 
 # CONFIGURAÇÕES
@@ -10,28 +9,8 @@ ctk.set_default_color_theme ("blue")
 
 # BANCO DE DADOS
 
-def criar_banco():
-
-    conexao = sqlite3.connect(CAMINHO_BANCO)
-    cursor = conexao.cursor()
-
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS lancamentos(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            descricao TEXT,
-            categoria TEXT,
-            subcategoria TEXT,
-            metodo_pagamento TEXT,
-            conta_bancaria TEXT,
-            data TEXT,
-            valor REAL
-    )         
-    """)
-
-    conexao.commit()
-    conexao.close()
-
 def salvar_lancamento():
+    print("Função salvar_lancamento foi chamada")
     descricao = entry_descricao.get()
     categoria = combobox_categoria.get()
     subcategoria = combobox_subcategoria.get()
@@ -275,6 +254,7 @@ def carregar_subcategoria(categoria):
 
 def aplicar_mascara_data (event):
     data_digitada = entry_data.get()
+    apenas_numeros = ""
     for caractere in data_digitada:
         if caractere.isdigit ():
             apenas_numeros += caractere
@@ -600,5 +580,6 @@ janela_botao_resumo.place ( relwidth = 1, relheight = 1)
 
 janela_botao_historico.place ( relwidth = 1, relheight = 1)
 
+banco_dados.criar_banco()
 mostrar_janela_lancamento()
 janela_principal.mainloop()
