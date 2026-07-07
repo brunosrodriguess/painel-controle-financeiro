@@ -64,3 +64,18 @@ def adicionar_lancamento(
 )
     conexao.commit()
     conexao.close()
+
+def listar_lancamentos():
+
+    conexao = sqlite3.connect(CAMINHO_BANCO)
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+    SELECT * FROM lancamentos
+""")
+
+    lancamentos = cursor.fetchall()
+
+    conexao.close()
+
+    return lancamentos

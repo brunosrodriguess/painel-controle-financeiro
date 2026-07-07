@@ -7,7 +7,7 @@ import banco_dados
 ctk.set_appearance_mode ("system")
 ctk.set_default_color_theme ("blue")
 
-# BANCO DE DADOS
+# FUNÇÕES DE INTERFACE PARA BANCO DE DADOS
 
 def salvar_lancamento():
     print("Função salvar_lancamento foi chamada")
@@ -28,6 +28,24 @@ def salvar_lancamento():
         data,
         valor
     )
+
+## CAIXA DE MENSAGEM SUCESSO
+
+    messagebox.showinfo (
+        "Sucesso",
+        "Lançamento salvo com sucesso!"
+    )
+
+## LIMPAR CAMPOS
+
+def limpar_campos():
+    entry_descricao.delete(0, "end")
+    combobox_categoria.set(TEXTO_PADRAO_CATEGORIA)
+    combobox_subcategoria.set(TEXTO_PADRAO_SUBCATEGORIA)
+    combobox_metodo_pagamento.set(TEXTO_PADRAO_METODO_PAGAMENTO)
+    combobox_conta_bancaria.set(TEXTO_PADRAO_CONTA_BANCARIA)
+    entry_data.delete(0, "end")
+    entry_valor.delete(0, "end")
 
 # PALETA DE CORES
 
@@ -544,6 +562,7 @@ botao_limpar_dados = ctk.CTkButton (janela_botao_lancamento,
     fg_color = COR_BOTAO_LIMPAR,
     text_color = COR_TEXTO_LIMPAR,
     hover_color = COR_INTERACAO_LIMPAR,
+    command= limpar_campos,
     font = FONTE_BOTAO_LIMPAR)
 
 botao_limpar_dados.grid (row = 5, column = 5, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
@@ -565,12 +584,25 @@ label_botao_resumo.pack (pady = 30)
 janela_botao_historico = ctk.CTkFrame (janela_botoes,
     fg_color = COR_FUNDO)
 
-label_botao_historico = ctk.CTkLabel (janela_botao_historico,
-    text = "HISTORICO",
-    text_color = COR_TEXTO,
-    font = ("Roboto", 30, "bold"))
+historico = ttk.Treeview (janela_botao_historico,
+    columns = (
+        "descricao",
+        "categoria",
+        "subcategoria",
+        "metodo_pagamento",
+        "conta_bancaria",
+        "data",
+        "valor"),
+    show = "headings"
+)
 
-label_botao_historico.pack (pady = 30)
+historico.heading ("descricao", text = "Descrição")
+historico.heading ("categoria", text = "Categoria")
+historico.heading ("subcategoria", text = "Subcategoria")
+historico.heading ("metodo_pagamento", text = "Método de Pagamento")
+historico.heading ("conta_bancaria", text = "Conta Bancária")
+historico.heading ("data", text = "Data")
+historico.heading ("valor", text = "Valor")
 
 ## AJUSTE DIMENSÃO JANELA DOS BOTÕES
 
