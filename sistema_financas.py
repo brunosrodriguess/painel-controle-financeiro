@@ -36,6 +36,8 @@ def salvar_lancamento():
         "Lançamento salvo com sucesso!"
     )
 
+    limpar_campos()
+
 ## LIMPAR CAMPOS
 
 def limpar_campos():
@@ -603,6 +605,24 @@ historico.heading ("metodo_pagamento", text = "Método de Pagamento")
 historico.heading ("conta_bancaria", text = "Conta Bancária")
 historico.heading ("data", text = "Data")
 historico.heading ("valor", text = "Valor")
+
+historico.column ("descricao", width = 150, anchor = "w")
+historico.column ("categoria", width = 150, anchor = "w")
+historico.column ("subcategoria", width = 150, anchor = "w")
+historico.column ("metodo_pagamento", width = 150, anchor = "w")
+historico.column ("conta_bancaria", width = 100, anchor = "w")
+historico.column ("valor", width = 100, anchor = "w")
+historico.column ("data", width = 100, anchor = "w")
+
+scroll_historico = ttk.Scrollbar (janela_botao_historico, orient = "vertical")
+
+scroll_historico.pack (side = "right", fill = "y")
+
+historico.pack (fill = "both", expand = True, padx = 20, pady = 20)
+
+scroll_historico.config (command = historico.yview)
+
+historico.configure (yscrollcommand = scroll_historico.set)
 
 ## AJUSTE DIMENSÃO JANELA DOS BOTÕES
 
