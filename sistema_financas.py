@@ -620,9 +620,15 @@ scroll_historico.pack (side = "right", fill = "y")
 
 historico.pack (fill = "both", expand = True, padx = 20, pady = 20)
 
-scroll_historico.config (command = historico.yview)
+scroll_historico.configure (command = historico.yview)
 
 historico.configure (yscrollcommand = scroll_historico.set)
+
+lancamentos = banco_dados.listar_lancamentos()
+
+for lancamento in lancamentos:
+    historico.insert("", "end", values = lancamento[1:])
+
 
 ## AJUSTE DIMENSÃO JANELA DOS BOTÕES
 
