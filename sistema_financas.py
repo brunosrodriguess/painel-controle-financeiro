@@ -10,7 +10,6 @@ ctk.set_default_color_theme ("blue")
 # FUNÇÕES DE INTERFACE PARA BANCO DE DADOS
 
 def salvar_lancamento():
-    print("Função salvar_lancamento foi chamada")
     descricao = entry_descricao.get()
     categoria = combobox_categoria.get()
     subcategoria = combobox_subcategoria.get()
@@ -38,6 +37,8 @@ def salvar_lancamento():
 
     limpar_campos()
 
+    atualizar_historico()
+
 ## LIMPAR CAMPOS
 
 def limpar_campos():
@@ -48,6 +49,18 @@ def limpar_campos():
     combobox_conta_bancaria.set(TEXTO_PADRAO_CONTA_BANCARIA)
     entry_data.delete(0, "end")
     entry_valor.delete(0, "end")
+
+## ATUALIZAR HISTÓRICO
+
+def atualizar_historico():
+    for item in historico.get_children():
+        historico.delete(item)
+
+    lancamentos = banco_dados.listar_lancamentos()
+
+    for lancamento in lancamentos:
+        historico.insert("", "end", values = lancamento[1:])
+
 
 # PALETA DE CORES
 
@@ -318,6 +331,12 @@ def aplicar_mascara_valor (event):
 
     entry_valor.delete(0, "end")
     entry_valor.insert(0, valor_formatado)
+
+# FUNÇÃO SELCIONAR NO HISTÓRICO
+
+def selecionar_lancamento(event):
+    item = historico.select()[0]
+    valores = historico.item(item)["values"]
 
 # JANELA PRINCIPAL
 
@@ -618,17 +637,13 @@ scroll_historico = ttk.Scrollbar (janela_botao_historico, orient = "vertical")
 
 scroll_historico.pack (side = "right", fill = "y")
 
-historico.pack (fill = "both", expand = True, padx = 20, pady = 20)
+historico.pack (fill = "both", expand = True, padx = 10, pady = 10)
 
 scroll_historico.configure (command = historico.yview)
 
 historico.configure (yscrollcommand = scroll_historico.set)
 
-lancamentos = banco_dados.listar_lancamentos()
-
-for lancamento in lancamentos:
-    historico.insert("", "end", values = lancamento[1:])
-
+historico.bind ("<<TreeviewSelect>>""),
 
 ## AJUSTE DIMENSÃO JANELA DOS BOTÕES
 
@@ -640,4 +655,5 @@ janela_botao_historico.place ( relwidth = 1, relheight = 1)
 
 banco_dados.criar_banco()
 mostrar_janela_lancamento()
+atualizar_historico()
 janela_principal.mainloop()
