@@ -61,6 +61,89 @@ def atualizar_historico():
     for lancamento in lancamentos:
         historico.insert("", "end", values = lancamento[1:])
 
+## FUNÇÃO SELCIONAR NO HISTÓRICO
+
+def selecionar_lancamento(event):
+    item = historico.selection()[0]
+    valores = historico.item(item)["values"]
+
+    entry_descricao.delete(0, "end")
+    entry_descricao.insert(0, valores[0])
+    combobox_categoria.set(valores[1])
+    combobox_subcategoria.set(valores[2])
+    combobox_metodo_pagamento.set(valores[3])
+    combobox_conta_bancaria.set(valores[4])
+    entry_data.delete(0, "end")
+    entry_data.insert(0, valores[5])
+    entry_valor.delete(0, "end")
+    entry_valor.insert(0, valores[6])
+
+# FUNÇÃO BOTÕES FRAME SUPERIOR
+
+def mostrar_janela_lancamento():
+    janela_botao_lancamento.tkraise()
+
+def mostrar_janela_resumo():
+    janela_botao_resumo.tkraise()
+
+def mostrar_janela_historico():
+    janela_botao_historico.tkraise()
+
+# FUNÇÃO BOTÃO SUBCATEGORIA JANELA LANCAMENTO
+
+def carregar_subcategoria(categoria):
+    subcategorias = SUBCATEGORIAS[categoria]
+    combobox_subcategoria.configure (values = subcategorias)
+    combobox_subcategoria.set (TEXTO_PADRAO_SUBCATEGORIA)
+
+# FUNÇÃO DIGITAÇÃO DATA JANELA LANCAMENTO
+
+def aplicar_mascara_data (event):
+    data_digitada = entry_data.get()
+    apenas_numeros = ""
+    for caractere in data_digitada:
+        if caractere.isdigit ():
+            apenas_numeros += caractere
+    apenas_numeros = apenas_numeros [:8]
+    if len(apenas_numeros) == 0:
+        data_formatada = ""
+    elif len(apenas_numeros) == 1:
+        data_formatada = f"{apenas_numeros[:2]}"
+    elif len(apenas_numeros) == 2:
+        data_formatada = f"{apenas_numeros[:2]}/"
+    elif len(apenas_numeros) == 3:
+        data_formatada = f"{apenas_numeros[:2]}/{apenas_numeros[2:4]}"
+    elif len(apenas_numeros) == 4:
+        data_formatada = f"{apenas_numeros[:2]}/{apenas_numeros[2:4]}/"
+    else:
+        data_formatada = f"{apenas_numeros[:2]}/{apenas_numeros[2:4]}/{apenas_numeros[4:8]}"
+
+    entry_data.delete(0, "end")
+    entry_data.insert(0, data_formatada)
+
+# FUNÇÃO DIGITAÇÃO VALOR JANELA LANCAMENTO
+
+def aplicar_mascara_valor (event):
+    valor_digitado = entry_valor.get()
+    apenas_numeros = ""
+    for caractere in valor_digitado:
+        if caractere.isdigit ():
+            apenas_numeros += caractere
+    apenas_numeros = apenas_numeros [:8]
+    if len(apenas_numeros) == 0:
+        valor_formatado = ""
+    elif len(apenas_numeros) == 1:
+        valor_formatado = f"R$ 0,0{apenas_numeros}"
+    elif len(apenas_numeros) == 2:
+        valor_formatado = f"R$ 0,{apenas_numeros}"
+    else:
+        inteiro = int(apenas_numeros [:-2])
+        decimal = apenas_numeros [-2:]
+        inteiro = f"{inteiro:,}".replace(",", ".")
+        valor_formatado = f"R$ {inteiro},{decimal}"
+
+    entry_valor.delete(0, "end")
+    entry_valor.insert(0, valor_formatado)
 
 # PALETA DE CORES
 
@@ -77,7 +160,7 @@ COR_BOTAO_LIMPAR = "#616774"
 COR_INTERACAO_LANCAR = "#30672A"
 COR_INTERACAO_LIMPAR = "#393D44"
 
-# PADRÕES DE INTERFACE JANELA LANCAMENTO
+# CONSTANTES DE INTERFACE JANELA LANCAMENTO
 
 LARGURA_CAMPOS_LANCAMENTO = 280
 ALTURA_CAMPOS_LANCAMENTO = 46
@@ -93,7 +176,7 @@ FONTE_BOTAO_LIMPAR = ("Roboto", 17, "bold")
 ALINHAMENTO = "w"
 ARREDONDAMENTO = 15
 
-## VARIÁVEIS LISTA SUSPENSA JANELA LANCAMENTO
+## CONSTANTES LISTA SUSPENSA JANELA LANCAMENTO
 
 TEXTO_PADRAO_CATEGORIA = "Selecione uma categoria"
 TEXTO_PADRAO_SUBCATEGORIA = "Selecione uma subcategoria"
@@ -265,78 +348,9 @@ CONTA_BANCARIA = [
     "PicPay",
 ]
 
-# FUNÇÃO BOTÕES FRAME SUPERIOR
+## VÁRIAVEIS DE ESTADO
 
-def mostrar_janela_lancamento():
-    janela_botao_lancamento.tkraise()
-
-def mostrar_janela_resumo():
-    janela_botao_resumo.tkraise()
-
-def mostrar_janela_historico():
-    janela_botao_historico.tkraise()
-
-# FUNÇÃO BOTÃO SUBCATEGORIA JANELA LANCAMENTO
-
-def carregar_subcategoria(categoria):
-    subcategorias = SUBCATEGORIAS[categoria]
-    combobox_subcategoria.configure (values = subcategorias)
-    combobox_subcategoria.set (TEXTO_PADRAO_SUBCATEGORIA)
-
-# FUNÇÃO DIGITAÇÃO DATA JANELA LANCAMENTO
-
-def aplicar_mascara_data (event):
-    data_digitada = entry_data.get()
-    apenas_numeros = ""
-    for caractere in data_digitada:
-        if caractere.isdigit ():
-            apenas_numeros += caractere
-    apenas_numeros = apenas_numeros [:8]
-    if len(apenas_numeros) == 0:
-        data_formatada = ""
-    elif len(apenas_numeros) == 1:
-        data_formatada = f"{apenas_numeros[:2]}"
-    elif len(apenas_numeros) == 2:
-        data_formatada = f"{apenas_numeros[:2]}/"
-    elif len(apenas_numeros) == 3:
-        data_formatada = f"{apenas_numeros[:2]}/{apenas_numeros[2:4]}"
-    elif len(apenas_numeros) == 4:
-        data_formatada = f"{apenas_numeros[:2]}/{apenas_numeros[2:4]}/"
-    else:
-        data_formatada = f"{apenas_numeros[:2]}/{apenas_numeros[2:4]}/{apenas_numeros[4:8]}"
-
-    entry_data.delete(0, "end")
-    entry_data.insert(0, data_formatada)
-
-# FUNÇÃO DIGITAÇÃO VALOR JANELA LANCAMENTO
-
-def aplicar_mascara_valor (event):
-    valor_digitado = entry_valor.get()
-    apenas_numeros = ""
-    for caractere in valor_digitado:
-        if caractere.isdigit ():
-            apenas_numeros += caractere
-    apenas_numeros = apenas_numeros [:8]
-    if len(apenas_numeros) == 0:
-        valor_formatado = ""
-    elif len(apenas_numeros) == 1:
-        valor_formatado = f"R$ 0,0{apenas_numeros}"
-    elif len(apenas_numeros) == 2:
-        valor_formatado = f"R$ 0,{apenas_numeros}"
-    else:
-        inteiro = int(apenas_numeros [:-2])
-        decimal = apenas_numeros [-2:]
-        inteiro = f"{inteiro:,}".replace(",", ".")
-        valor_formatado = f"R$ {inteiro},{decimal}"
-
-    entry_valor.delete(0, "end")
-    entry_valor.insert(0, valor_formatado)
-
-# FUNÇÃO SELCIONAR NO HISTÓRICO
-
-def selecionar_lancamento(event):
-    item = historico.select()[0]
-    valores = historico.item(item)["values"]
+id_lancamento_selecionado = None
 
 # JANELA PRINCIPAL
 
@@ -643,7 +657,7 @@ scroll_historico.configure (command = historico.yview)
 
 historico.configure (yscrollcommand = scroll_historico.set)
 
-historico.bind ("<<TreeviewSelect>>""),
+historico.bind ("<<TreeviewSelect>>", selecionar_lancamento)
 
 ## AJUSTE DIMENSÃO JANELA DOS BOTÕES
 
