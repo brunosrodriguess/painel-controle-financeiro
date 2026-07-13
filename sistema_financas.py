@@ -59,12 +59,14 @@ def atualizar_historico():
     lancamentos = banco_dados.listar_lancamentos()
 
     for lancamento in lancamentos:
-        historico.insert("", "end", values = lancamento[1:])
+        historico.insert("", "end", iid = lancamento[0], values = lancamento[1:])
 
 ## FUNÇÃO SELCIONAR NO HISTÓRICO
 
 def selecionar_lancamento(event):
+    global id_lancamento_selecionado
     item = historico.selection()[0]
+    id_lancamento_selecionado = item
     valores = historico.item(item)["values"]
 
     entry_descricao.delete(0, "end")
