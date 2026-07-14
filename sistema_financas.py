@@ -80,6 +80,74 @@ def selecionar_lancamento(event):
     entry_valor.delete(0, "end")
     entry_valor.insert(0, valores[6])
 
+    entrar_modo_edicao()
+
+# FUNÇÃO ENTRAR MODO EDIÇÃO
+
+def entrar_modo_edicao():
+    botao_lancar_dados.configure(
+        text = "Salvar Alterações",
+        command = editar_lancamento)
+    botao_limpar_dados.configure(
+        text = "Excluir Lançamento",
+        command = excluir_lancamento)
+
+## FUNÇÃO EDITAR LANÇAMENTO
+
+def editar_lancamento():
+    descricao = entry_descricao.get()
+    categoria = combobox_categoria.get()
+    subcategoria = combobox_subcategoria.get()
+    metodo_pagamento = combobox_metodo_pagamento.get()
+    conta_bancaria = combobox_conta_bancaria.get()
+    data = entry_data.get()
+    valor = entry_valor.get()
+
+    banco_dados.editar_lancamento(
+        id_lancamento_selecionado,
+        descricao,
+        categoria,
+        subcategoria,
+        metodo_pagamento,
+        conta_bancaria,
+        data,
+        valor
+    )
+
+    atualizar_historico()
+
+    limpar_campos()
+
+    sair_modo_edicao()
+
+## FUNÇÃO EXCLUIR LANÇAMENTO
+
+def excluir_lancamento():
+    banco_dados.excluir_lancamento(
+        id_lancamento_selecionado,
+    )
+
+    atualizar_historico()
+
+    limpar_campos()
+
+    sair_modo_edicao()
+
+# FUNÇÃO SAIR MODO EDIÇÃO
+
+def sair_modo_edicao():
+    botao_lancar_dados.configure(
+        text = "Lançar Dados",
+        command = salvar_lancamento)
+    botao_limpar_dados.configure(
+        text = "Limpar Dados",
+        command = limpar_campos)
+    
+    global id_lancamento_selecionado
+    id_lancamento_selecionado = None
+
+# FUNÇÃO 
+
 # FUNÇÃO BOTÕES FRAME SUPERIOR
 
 def mostrar_janela_lancamento():
@@ -603,6 +671,10 @@ botao_limpar_dados = ctk.CTkButton (janela_botao_lancamento,
     font = FONTE_BOTAO_LIMPAR)
 
 botao_limpar_dados.grid (row = 5, column = 5, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
+
+## JANELA LANCAMENTO MODO EDIÇÃO
+
+botao_cancelar_edicao = ctk.CTkButton ()
 
 # JANELA RESUMO
 
