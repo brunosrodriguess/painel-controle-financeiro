@@ -91,6 +91,8 @@ def entrar_modo_edicao():
     botao_limpar_dados.configure(
         text = "Excluir Lançamento",
         command = excluir_lancamento)
+    
+    botao_cancelar_edicao.grid()
 
 ## FUNÇÃO EDITAR LANÇAMENTO
 
@@ -146,15 +148,21 @@ def sair_modo_edicao():
     global id_lancamento_selecionado
     id_lancamento_selecionado = None
 
-# FUNÇÃO 
+    botao_cancelar_edicao.grid_remove()
+
+# FUNÇÃO CANCELAR DO MODO DE EDIÇÃO
+
+def cancelar_edicao():
+    limpar_campos()
+    sair_modo_edicao()
 
 # FUNÇÃO BOTÕES FRAME SUPERIOR
 
 def mostrar_janela_lancamento():
     janela_botao_lancamento.tkraise()
 
-def mostrar_janela_resumo():
-    janela_botao_resumo.tkraise()
+def mostrar_janela_graficos():
+    janela_botao_graficos.tkraise()
 
 def mostrar_janela_historico():
     janela_botao_historico.tkraise()
@@ -223,12 +231,15 @@ COR_MENU = "#577B54"
 COR_TEXTO =  "#000000"
 COR_TEXTO_LANCAR = "#FFFFFF"
 COR_TEXTO_LIMPAR = "#FFFFFF"
+COR_TEXTO_CANCELAR = "#FFFFFF"
 COR_TEXTO_JANELA = "#000000"
 COR_CAMPOS = "#E8E8E8"
+COR_BOTAO_CANCELAR =  "#A12626"
 COR_BOTAO_LANCAR = "#3A7B34"
 COR_BOTAO_LIMPAR = "#616774"
 COR_INTERACAO_LANCAR = "#30672A"
 COR_INTERACAO_LIMPAR = "#393D44"
+COR_INTERACAO_CANCELAR =  "#611111"
 
 # CONSTANTES DE INTERFACE JANELA LANCAMENTO
 
@@ -243,6 +254,7 @@ FONTE_ENTRY = ("Roboto", 15, "normal")
 FONTE_COMBOBOX = ("Roboto", 15, "normal")
 FONTE_BOTAO_LANCAR = ("Roboto", 17, "bold")
 FONTE_BOTAO_LIMPAR = ("Roboto", 17, "bold")
+FONTE_BOTAO_CANCELAR = ("Roboto", 17, "bold")
 ALINHAMENTO = "w"
 ARREDONDAMENTO = 15
 
@@ -467,18 +479,18 @@ botao_historico.pack (side = "right", padx = 20)
 
 ## BOTÃO RESUMO
 
-botao_resumo = ctk.CTkButton (frame_superior,
-    text = "Resumo",
+botao_graficos = ctk.CTkButton (frame_superior,
+    text = "Gráficos",
     width = 156,
     height = 51,
     corner_radius = 15,
     fg_color = COR_FUNDO,
     text_color = COR_TEXTO,
     hover_color = COR_TITULO,
-    command = mostrar_janela_resumo,
+    command = mostrar_janela_graficos,
     font = ("Roboto", 18, "normal"))
 
-botao_resumo.pack (side = "right", padx = 20)
+botao_graficos.pack (side = "right", padx = 20)
 
 ## BOTÃO LANCAMENTO
 
@@ -674,14 +686,27 @@ botao_limpar_dados.grid (row = 5, column = 5, sticky = ALINHAMENTO, padx = MARGE
 
 ## JANELA LANCAMENTO MODO EDIÇÃO
 
-botao_cancelar_edicao = ctk.CTkButton ()
+botao_cancelar_edicao = ctk.CTkButton (janela_botao_lancamento,
+    text = "Cancelar",
+    width = 180,
+    height = 46,
+    corner_radius = ARREDONDAMENTO,
+    fg_color = COR_BOTAO_CANCELAR,
+    text_color = COR_TEXTO_CANCELAR,
+    hover_color = COR_INTERACAO_CANCELAR,
+    command = cancelar_edicao,
+    font = FONTE_BOTAO_CANCELAR)
+
+botao_cancelar_edicao.grid (row = 6, column = 5, sticky = "e", padx = MARGEM_X, pady = MARGEM_Y_TOPO)
+
+botao_cancelar_edicao.grid_remove()
 
 # JANELA RESUMO
 
-janela_botao_resumo = ctk.CTkFrame (janela_botoes,
+janela_botao_graficos = ctk.CTkFrame (janela_botoes,
     fg_color = COR_FUNDO)
 
-label_botao_resumo = ctk.CTkLabel (janela_botao_resumo,
+label_botao_resumo = ctk.CTkLabel (janela_botao_graficos,
     text = "RESUMO",
     text_color = COR_TEXTO,
     font = ("Roboto", 30, "bold"))
@@ -737,7 +762,7 @@ historico.bind ("<<TreeviewSelect>>", selecionar_lancamento)
 
 janela_botao_lancamento.place ( relwidth = 1, relheight = 1)
 
-janela_botao_resumo.place ( relwidth = 1, relheight = 1)
+janela_botao_graficos.place ( relwidth = 1, relheight = 1)
 
 janela_botao_historico.place ( relwidth = 1, relheight = 1)
 
