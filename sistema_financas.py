@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from tkinter import messagebox, ttk
 import banco_dados
+from tkcalendar import DateEntry
 
 # CONFIGURAÇÕES
 
@@ -449,7 +450,7 @@ frame_superior = ctk.CTkFrame (janela_principal,
     height = 110,
     fg_color = COR_MENU)
 
-frame_superior.pack (padx = 0, pady = 0)
+frame_superior.pack (fill = "x", side = "top")
 
 frame_superior.pack_propagate(False)
 
@@ -477,7 +478,7 @@ botao_historico = ctk.CTkButton (frame_superior,
 
 botao_historico.pack (side = "right", padx = 20)
 
-## BOTÃO RESUMO
+## BOTÃO GRÁFICOS
 
 botao_graficos = ctk.CTkButton (frame_superior,
     text = "Gráficos",
@@ -701,17 +702,35 @@ botao_cancelar_edicao.grid (row = 6, column = 5, sticky = "e", padx = MARGEM_X, 
 
 botao_cancelar_edicao.grid_remove()
 
-# JANELA RESUMO
+# JANELA GRÁFICOS
 
 janela_botao_graficos = ctk.CTkFrame (janela_botoes,
     fg_color = COR_FUNDO)
 
-label_botao_resumo = ctk.CTkLabel (janela_botao_graficos,
-    text = "RESUMO",
-    text_color = COR_TEXTO,
-    font = ("Roboto", 30, "bold"))
+## FILTROS
 
-label_botao_resumo.pack (pady = 30)
+frame_filtros = ctk.CTkFrame (janela_botao_graficos,
+    width = 1300,
+    height = 60,
+    fg_color = COR_FUNDO
+)
+
+frame_filtros.grid (row = 0, column = 0, sticky = "n")
+
+frame_filtros.grid_propagate(False)
+
+dateentry_data_inicio = DateEntry (frame_filtros,
+
+)
+
+dateentry_data_fim = ctk.CTkButton (frame_filtros,
+
+)
+
+## INDICADORES
+
+## GRÁFICOS
+
 
 # JANELA HISTÓRICO
 
