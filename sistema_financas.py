@@ -242,7 +242,7 @@ COR_INTERACAO_LANCAR = "#30672A"
 COR_INTERACAO_LIMPAR = "#393D44"
 COR_INTERACAO_CANCELAR =  "#611111"
 
-# CONSTANTES DE INTERFACE JANELA LANCAMENTO
+# CONSTANTES DE INTERFACE
 
 LARGURA_CAMPOS_LANCAMENTO = 280
 ALTURA_CAMPOS_LANCAMENTO = 46
@@ -251,7 +251,8 @@ MARGEM_Y =  11
 MARGEM_X = 87
 FONTE = "Roboto"
 FONTE_LABEL = ("Roboto", 24, "normal")
-FONTE_ENTRY = ("Roboto", 15, "normal")
+FONTE_ENTRY = ("Roboto", 17, "normal")
+FONTE_LABEL_FILTRO = ("Roboto", 15, "bold")
 FONTE_COMBOBOX = ("Roboto", 15, "normal")
 FONTE_BOTAO_LANCAR = ("Roboto", 17, "bold")
 FONTE_BOTAO_LIMPAR = ("Roboto", 17, "bold")
@@ -712,20 +713,37 @@ janela_botao_graficos = ctk.CTkFrame (janela_botoes,
 frame_filtros = ctk.CTkFrame (janela_botao_graficos,
     width = 1300,
     height = 60,
-    fg_color = COR_FUNDO
-)
+    fg_color = COR_FUNDO)
 
 frame_filtros.grid (row = 0, column = 0, sticky = "n")
 
 frame_filtros.grid_propagate(False)
 
-dateentry_data_inicio = DateEntry (frame_filtros,
+label_data_inicio = ctk.CTkLabel (frame_filtros,
+    text = "Data inicial",
+    font = FONTE_LABEL_FILTRO,
+    text_color = COR_TEXTO)
+
+label_data_inicio.grid (row = 0, column = 0, padx = (50,25), pady = 20)
+
+dateentry_data_inicio = DateEntry (frame_filtros
 
 )
 
-dateentry_data_fim = ctk.CTkButton (frame_filtros,
+dateentry_data_inicio.grid (row = 0, column = 1, padx = (5,25) , pady = 20)
+
+label_data_fim = ctk.CTkLabel (frame_filtros,
+    text = "Data final",
+    font = FONTE_LABEL_FILTRO,
+    text_color = COR_TEXTO)
+
+label_data_fim.grid (row = 0, column = 2, padx = (50,25), pady = 20)
+
+dateentry_data_fim = DateEntry (frame_filtros,
 
 )
+
+dateentry_data_fim.grid (row = 0, column = 3, padx = (5,25) , pady = 20)
 
 ## INDICADORES
 
