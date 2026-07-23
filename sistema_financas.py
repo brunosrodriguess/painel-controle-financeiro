@@ -1,7 +1,6 @@
 import customtkinter as ctk
 from tkinter import messagebox, ttk
 import banco_dados
-from tkcalendar import DateEntry
 
 # CONFIGURAÇÕES
 
@@ -246,6 +245,8 @@ COR_INTERACAO_CANCELAR =  "#611111"
 
 LARGURA_CAMPOS_LANCAMENTO = 280
 ALTURA_CAMPOS_LANCAMENTO = 46
+LARGURA_ENTRY_FILTRO = 100
+ALTURA_ENTRY_FILTRO = 30
 MARGEM_Y_TOPO = (50,11)
 MARGEM_Y =  11
 MARGEM_X = 87
@@ -253,12 +254,14 @@ FONTE = "Roboto"
 FONTE_LABEL = ("Roboto", 24, "normal")
 FONTE_ENTRY = ("Roboto", 17, "normal")
 FONTE_LABEL_FILTRO = ("Roboto", 15, "bold")
+FONTE_ENTRY_FILTRO = ("Roboto", 15, "normal")
 FONTE_COMBOBOX = ("Roboto", 15, "normal")
 FONTE_BOTAO_LANCAR = ("Roboto", 17, "bold")
 FONTE_BOTAO_LIMPAR = ("Roboto", 17, "bold")
 FONTE_BOTAO_CANCELAR = ("Roboto", 17, "bold")
 ALINHAMENTO = "w"
-ARREDONDAMENTO = 15
+ARREDONDAMENTO_CAMPOS_LANCAMENTOS = 15
+ARREDONDAMENTO_CAMPOS_FILTRO = 8
 
 ## CONSTANTES LISTA SUSPENSA JANELA LANCAMENTO
 
@@ -535,7 +538,7 @@ entry_descricao = ctk.CTkEntry (janela_botao_lancamento,
     text_color = COR_TEXTO_JANELA,
     height = ALTURA_CAMPOS_LANCAMENTO,
     width = LARGURA_CAMPOS_LANCAMENTO,
-    corner_radius = ARREDONDAMENTO)
+    corner_radius = ARREDONDAMENTO_CAMPOS_LANCAMENTOS)
 
 entry_descricao.grid (row = 1, column = 1, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
 
@@ -552,7 +555,7 @@ combobox_categoria = ctk.CTkComboBox (janela_botao_lancamento,
     text_color = COR_TEXTO_JANELA,
     height = ALTURA_CAMPOS_LANCAMENTO,
     width = LARGURA_CAMPOS_LANCAMENTO,
-    corner_radius = ARREDONDAMENTO,
+    corner_radius = ARREDONDAMENTO_CAMPOS_LANCAMENTOS,
     command = carregar_subcategoria,
     values = CATEGORIAS)
 
@@ -573,7 +576,7 @@ combobox_subcategoria = ctk.CTkComboBox (janela_botao_lancamento,
     text_color = COR_TEXTO_JANELA,
     height = ALTURA_CAMPOS_LANCAMENTO,
     width = LARGURA_CAMPOS_LANCAMENTO,
-    corner_radius = ARREDONDAMENTO,
+    corner_radius = ARREDONDAMENTO_CAMPOS_LANCAMENTOS,
     values = [])
 
 combobox_subcategoria.set (TEXTO_PADRAO_SUBCATEGORIA)
@@ -593,7 +596,7 @@ combobox_metodo_pagamento = ctk.CTkComboBox (janela_botao_lancamento,
     text_color = COR_TEXTO_JANELA,
     height = ALTURA_CAMPOS_LANCAMENTO,
     width = LARGURA_CAMPOS_LANCAMENTO,
-    corner_radius = ARREDONDAMENTO,
+    corner_radius = ARREDONDAMENTO_CAMPOS_LANCAMENTOS,
     values = METODO_PAGAMENTO)
 
 combobox_metodo_pagamento.set (TEXTO_PADRAO_METODO_PAGAMENTO)
@@ -613,7 +616,7 @@ combobox_conta_bancaria = ctk.CTkComboBox (janela_botao_lancamento,
     text_color = COR_TEXTO_JANELA,
     height = ALTURA_CAMPOS_LANCAMENTO,
     width = LARGURA_CAMPOS_LANCAMENTO,
-    corner_radius = ARREDONDAMENTO,
+    corner_radius = ARREDONDAMENTO_CAMPOS_LANCAMENTOS,
     values = CONTA_BANCARIA)
 
 combobox_conta_bancaria.set (TEXTO_PADRAO_CONTA_BANCARIA)
@@ -634,7 +637,7 @@ entry_data = ctk.CTkEntry (janela_botao_lancamento,
     text_color = COR_TEXTO_JANELA,
     height = ALTURA_CAMPOS_LANCAMENTO,
     width = LARGURA_CAMPOS_LANCAMENTO,
-    corner_radius = ARREDONDAMENTO)
+    corner_radius = ARREDONDAMENTO_CAMPOS_LANCAMENTOS)
 
 entry_data.grid (row = 5, column = 3, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
 
@@ -654,7 +657,7 @@ entry_valor = ctk.CTkEntry (janela_botao_lancamento,
     text_color = COR_TEXTO_JANELA,
     height = ALTURA_CAMPOS_LANCAMENTO,
     width = LARGURA_CAMPOS_LANCAMENTO,
-    corner_radius = ARREDONDAMENTO)
+    corner_radius = ARREDONDAMENTO_CAMPOS_LANCAMENTOS)
 
 entry_valor.grid (row = 1, column = 5, sticky = ALINHAMENTO, padx = MARGEM_X, pady = MARGEM_Y)
 
@@ -664,7 +667,7 @@ botao_lancar_dados = ctk.CTkButton (janela_botao_lancamento,
     text = "Lançar Dados",
     width = LARGURA_CAMPOS_LANCAMENTO,
     height = ALTURA_CAMPOS_LANCAMENTO,
-    corner_radius = ARREDONDAMENTO,
+    corner_radius = ARREDONDAMENTO_CAMPOS_LANCAMENTOS,
     fg_color = COR_BOTAO_LANCAR,
     text_color = COR_TEXTO_LANCAR,
     hover_color = COR_INTERACAO_LANCAR,
@@ -677,7 +680,7 @@ botao_limpar_dados = ctk.CTkButton (janela_botao_lancamento,
     text = "Limpar Dados",
     width = LARGURA_CAMPOS_LANCAMENTO,
     height = ALTURA_CAMPOS_LANCAMENTO,
-    corner_radius = ARREDONDAMENTO,
+    corner_radius = ARREDONDAMENTO_CAMPOS_LANCAMENTOS,
     fg_color = COR_BOTAO_LIMPAR,
     text_color = COR_TEXTO_LIMPAR,
     hover_color = COR_INTERACAO_LIMPAR,
@@ -692,7 +695,7 @@ botao_cancelar_edicao = ctk.CTkButton (janela_botao_lancamento,
     text = "Cancelar",
     width = 180,
     height = 46,
-    corner_radius = ARREDONDAMENTO,
+    corner_radius = ARREDONDAMENTO_CAMPOS_LANCAMENTOS,
     fg_color = COR_BOTAO_CANCELAR,
     text_color = COR_TEXTO_CANCELAR,
     hover_color = COR_INTERACAO_CANCELAR,
@@ -708,6 +711,7 @@ botao_cancelar_edicao.grid_remove()
 janela_botao_graficos = ctk.CTkFrame (janela_botoes,
     fg_color = COR_FUNDO)
 
+
 ## FILTROS
 
 frame_filtros = ctk.CTkFrame (janela_botao_graficos,
@@ -720,30 +724,47 @@ frame_filtros.grid (row = 0, column = 0, sticky = "n")
 frame_filtros.grid_propagate(False)
 
 label_data_inicio = ctk.CTkLabel (frame_filtros,
-    text = "Data inicial",
+    text = "Data inicial:",
     font = FONTE_LABEL_FILTRO,
     text_color = COR_TEXTO)
 
 label_data_inicio.grid (row = 0, column = 0, padx = (50,25), pady = 20)
 
-dateentry_data_inicio = DateEntry (frame_filtros
-
+entry_data_inicio = ctk.CTkEntry (frame_filtros,
+    fg_color = COR_FUNDO,
+    font = FONTE_ENTRY_FILTRO,
+    text_color = COR_TEXTO,
+    corner_radius = ARREDONDAMENTO_CAMPOS_FILTRO,
+    height = ALTURA_ENTRY_FILTRO,
+    width = LARGURA_ENTRY_FILTRO,
 )
 
-dateentry_data_inicio.grid (row = 0, column = 1, padx = (5,25) , pady = 20)
+entry_data_inicio.grid (row = 0, column = 1, padx = (50,25), pady = 20)
+
+botao_calendario_inicio = ctk.CTkButton (frame_filtros,
+   
+)
 
 label_data_fim = ctk.CTkLabel (frame_filtros,
-    text = "Data final",
+    text = "Data final:",
     font = FONTE_LABEL_FILTRO,
     text_color = COR_TEXTO)
 
 label_data_fim.grid (row = 0, column = 2, padx = (50,25), pady = 20)
 
-dateentry_data_fim = DateEntry (frame_filtros,
-
+entry_data_final = ctk.CTkEntry (frame_filtros,
+    fg_color = COR_FUNDO,
+    font = FONTE_ENTRY_FILTRO,
+    text_color = COR_TEXTO,
+    height = ALTURA_ENTRY_FILTRO,
+    width = LARGURA_ENTRY_FILTRO,
 )
 
-dateentry_data_fim.grid (row = 0, column = 3, padx = (5,25) , pady = 20)
+entry_data_final.grid (row = 0, column = 3, padx = (50,25), pady = 20)
+
+botao_calendario_final = ctk.CTkButton (frame_filtros,
+
+)
 
 ## INDICADORES
 
