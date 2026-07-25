@@ -223,6 +223,11 @@ def aplicar_mascara_valor (event):
     entry_valor.delete(0, "end")
     entry_valor.insert(0, valor_formatado)
 
+# FUNÇÃO ABRIR CALENDÁRIO JANELA GRÁFICOS
+
+def abrir_calendario(entry):
+    print("teste")
+
 # PALETA DE CORES
 
 COR_FUNDO = "#D2D2D2"
@@ -247,6 +252,8 @@ LARGURA_CAMPOS_LANCAMENTO = 280
 ALTURA_CAMPOS_LANCAMENTO = 46
 LARGURA_ENTRY_FILTRO = 100
 ALTURA_ENTRY_FILTRO = 30
+LARGURA_BOTAO_CALENDARIO_FILTRO = 50
+ALTURA_BOTAO_CALENDARIO_FILTRO = 10
 MARGEM_Y_TOPO = (50,11)
 MARGEM_Y =  11
 MARGEM_X = 87
@@ -728,7 +735,7 @@ label_data_inicio = ctk.CTkLabel (frame_filtros,
     font = FONTE_LABEL_FILTRO,
     text_color = COR_TEXTO)
 
-label_data_inicio.grid (row = 0, column = 0, padx = (50,25), pady = 20)
+label_data_inicio.grid (row = 0, column = 0, padx = (150,5), pady = 20)
 
 entry_data_inicio = ctk.CTkEntry (frame_filtros,
     fg_color = COR_FUNDO,
@@ -739,18 +746,26 @@ entry_data_inicio = ctk.CTkEntry (frame_filtros,
     width = LARGURA_ENTRY_FILTRO,
 )
 
-entry_data_inicio.grid (row = 0, column = 1, padx = (50,25), pady = 20)
+entry_data_inicio.grid (row = 0, column = 1, padx = (5,2), pady = 20)
 
 botao_calendario_inicio = ctk.CTkButton (frame_filtros,
-   
+   text = "📆",
+   width = ALTURA_BOTAO_CALENDARIO_FILTRO,
+   height = LARGURA_BOTAO_CALENDARIO_FILTRO,
+   corner_radius = ARREDONDAMENTO_CAMPOS_FILTRO,
+   fg_color = COR_FUNDO,
+   hover_color = COR_FUNDO,
+   command = lambda: abrir_calendario(entry_data_inicio)
 )
+
+botao_calendario_inicio.grid (row = 0, column = 2, padx = (5,50), pady = 20)
 
 label_data_fim = ctk.CTkLabel (frame_filtros,
     text = "Data final:",
     font = FONTE_LABEL_FILTRO,
     text_color = COR_TEXTO)
 
-label_data_fim.grid (row = 0, column = 2, padx = (50,25), pady = 20)
+label_data_fim.grid (row = 0, column = 3, padx = (40,5), pady = 20)
 
 entry_data_final = ctk.CTkEntry (frame_filtros,
     fg_color = COR_FUNDO,
@@ -760,11 +775,19 @@ entry_data_final = ctk.CTkEntry (frame_filtros,
     width = LARGURA_ENTRY_FILTRO,
 )
 
-entry_data_final.grid (row = 0, column = 3, padx = (50,25), pady = 20)
+entry_data_final.grid (row = 0, column = 4, padx = (5,2), pady = 20)
 
 botao_calendario_final = ctk.CTkButton (frame_filtros,
-
+   text = "📆",
+   width = ALTURA_BOTAO_CALENDARIO_FILTRO,
+   height = LARGURA_BOTAO_CALENDARIO_FILTRO,
+   corner_radius = ARREDONDAMENTO_CAMPOS_FILTRO,
+   fg_color = COR_FUNDO,
+   hover_color = COR_FUNDO,
+   command = lambda: abrir_calendario(entry_data_final)
 )
+
+botao_calendario_final.grid (row = 0, column = 5, padx = (5,50), pady = 20)
 
 ## INDICADORES
 
