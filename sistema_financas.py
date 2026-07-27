@@ -226,7 +226,17 @@ def aplicar_mascara_valor (event):
 # FUNÇÃO ABRIR CALENDÁRIO JANELA GRÁFICOS
 
 def abrir_calendario(entry):
-    print("teste")
+    global toplevel_calendario
+
+    if toplevel_calendario is not None:
+        toplevel_calendario.destroy()
+
+    toplevel_calendario = ctk.CTkToplevel()
+    toplevel_calendario.geometry ("280x240")
+    toplevel_calendario.resizable (False, False)
+    toplevel_calendario.configure (fg_color = COR_CALENDARIO)
+    toplevel_calendario.title ("Calendário")
+
 
 # PALETA DE CORES
 
@@ -245,6 +255,7 @@ COR_BOTAO_LIMPAR = "#616774"
 COR_INTERACAO_LANCAR = "#30672A"
 COR_INTERACAO_LIMPAR = "#393D44"
 COR_INTERACAO_CANCELAR =  "#611111"
+COR_CALENDARIO = "#577B54"
 
 # CONSTANTES DE INTERFACE
 
@@ -445,14 +456,11 @@ CONTA_BANCARIA = [
 ## VÁRIAVEIS DE ESTADO
 
 id_lancamento_selecionado = None
+toplevel_calendario = None
 
 # JANELA PRINCIPAL
 
-janela_principal = ctk.CTk ()
-janela_principal.title ("Painel de Controle Financeiro")
-janela_principal.geometry ("1300x700")
-janela_principal.resizable (False, False)
-janela_principal.configure (fg_color = COR_FUNDO)
+
 
 # FRAME SUPERIOR
 
