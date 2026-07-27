@@ -460,7 +460,11 @@ toplevel_calendario = None
 
 # JANELA PRINCIPAL
 
-
+janela_principal = ctk.CTk()
+janela_principal.title ("Painel de Controle Financeiro")
+janela_principal.geometry ("1300x700")
+janela_principal.resizable (False, False)
+janela_principal.configure (fg_color = COR_FUNDO)
 
 # FRAME SUPERIOR
 
