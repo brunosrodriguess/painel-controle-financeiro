@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from tkinter import messagebox, ttk
 import banco_dados
+from datetime import datetime
 
 # CONFIGURAÇÕES
 
@@ -234,9 +235,66 @@ def abrir_calendario(entry):
     toplevel_calendario = ctk.CTkToplevel()
     toplevel_calendario.geometry ("280x240")
     toplevel_calendario.resizable (False, False)
-    toplevel_calendario.configure (fg_color = COR_CALENDARIO)
     toplevel_calendario.title ("Calendário")
 
+    hoje = datetime.today()
+    mes_atual = hoje.month
+    ano_atual = hoje.year
+    nome_mes = MESES[mes_atual - 1]
+
+    frame_cabecalho_calendario = ctk.CTkFrame (toplevel_calendario,
+        width = 280,
+        height = 40,
+        fg_color = "#577B54")
+
+    frame_cabecalho_calendario.pack (fill = "x")
+
+    frame_cabecalho_calendario.pack_propagate (False)
+
+    botao_cabecalho_retornar = ctk.CTkButton (frame_cabecalho_calendario,
+        text = "<",
+        text_color = COR_BOTAO_CABECALHO_CALENDARIO,
+        width = LARGURA_BOTAO_CALENDARIO_RETORNAR,
+        height = ALTURA_BOTAO_CALENDARIO_RETORNAR,
+        hover = False,
+        fg_color = "transparent")
+
+    botao_cabecalho_retornar.pack (side = "left", padx = (50,20))
+
+    label_cabecalho = ctk.CTkLabel (frame_cabecalho_calendario,
+        text = f"{nome_mes} {ano_atual}",
+        text_color = "#000000",
+        font = ("Roboto", 12, "bold"))
+
+    label_cabecalho.pack (side = "left")
+
+    botao_cabecalho_avancar = ctk.CTkButton (frame_cabecalho_calendario,
+            text = ">",
+            text_color = COR_BOTAO_CABECALHO_CALENDARIO,
+            width = LARGURA_BOTAO_CALENDARIO_RETORNAR,
+            height = ALTURA_BOTAO_CALENDARIO_RETORNAR,
+            hover = False,
+            fg_color = "transparent")
+    
+    botao_cabecalho_avancar.pack (side = "left", padx = (20,50))
+
+    frame_calendario = ctk.CTkFrame (toplevel_calendario,
+        width = 280,
+        height = 160,
+        fg_color = COR_FUNDO)
+
+    frame_calendario.pack (fill = "both", expand = True)
+
+    frame_calendario.pack_propagate (False)
+
+    frame_rodape_calendario = ctk.CTkFrame (toplevel_calendario,
+        width = 280,
+        height = 40,
+        fg_color = "#577B54")
+
+    frame_rodape_calendario.pack (fill = "x")
+
+    frame_rodape_calendario.pack_propagate (False)
 
 # PALETA DE CORES
 
@@ -252,10 +310,10 @@ COR_CAMPOS = "#E8E8E8"
 COR_BOTAO_CANCELAR =  "#A12626"
 COR_BOTAO_LANCAR = "#3A7B34"
 COR_BOTAO_LIMPAR = "#616774"
+COR_BOTAO_CABECALHO_CALENDARIO = "#000000"
 COR_INTERACAO_LANCAR = "#30672A"
 COR_INTERACAO_LIMPAR = "#393D44"
 COR_INTERACAO_CANCELAR =  "#611111"
-COR_CALENDARIO = "#577B54"
 
 # CONSTANTES DE INTERFACE
 
@@ -265,6 +323,10 @@ LARGURA_ENTRY_FILTRO = 100
 ALTURA_ENTRY_FILTRO = 30
 LARGURA_BOTAO_CALENDARIO_FILTRO = 50
 ALTURA_BOTAO_CALENDARIO_FILTRO = 10
+LARGURA_BOTAO_CALENDARIO_RETORNAR = 25
+ALTURA_BOTAO_CALENDARIO_RETORNAR = 10
+LARGURA_BOTAO_CALENDARIO_AVANCAR = 25
+ALTURA_BOTAO_CALENDARIO_AVANCAR = 10
 MARGEM_Y_TOPO = (50,11)
 MARGEM_Y =  11
 MARGEM_X = 87
@@ -451,6 +513,23 @@ CONTA_BANCARIA = [
     "C6 Bank",
     "Mercado Pago",
     "PicPay",
+]
+
+## CONSTANTES JANELA GRÁFICOS
+
+MESES = [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro",
 ]
 
 ## VÁRIAVEIS DE ESTADO
@@ -765,8 +844,8 @@ botao_calendario_inicio = ctk.CTkButton (frame_filtros,
    width = ALTURA_BOTAO_CALENDARIO_FILTRO,
    height = LARGURA_BOTAO_CALENDARIO_FILTRO,
    corner_radius = ARREDONDAMENTO_CAMPOS_FILTRO,
-   fg_color = COR_FUNDO,
-   hover_color = COR_FUNDO,
+   fg_color = "transparent",
+   hover = False,
    command = lambda: abrir_calendario(entry_data_inicio)
 )
 
@@ -794,8 +873,8 @@ botao_calendario_final = ctk.CTkButton (frame_filtros,
    width = ALTURA_BOTAO_CALENDARIO_FILTRO,
    height = LARGURA_BOTAO_CALENDARIO_FILTRO,
    corner_radius = ARREDONDAMENTO_CAMPOS_FILTRO,
-   fg_color = COR_FUNDO,
-   hover_color = COR_FUNDO,
+   fg_color = "transparent",
+   hover = False,
    command = lambda: abrir_calendario(entry_data_final)
 )
 
