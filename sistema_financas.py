@@ -233,7 +233,7 @@ def abrir_calendario(entry):
         toplevel_calendario.destroy()
 
     toplevel_calendario = ctk.CTkToplevel()
-    toplevel_calendario.geometry ("280x240")
+    toplevel_calendario.geometry ("300x260")
     toplevel_calendario.resizable (False, False)
     toplevel_calendario.title ("Calendário")
 
@@ -243,7 +243,7 @@ def abrir_calendario(entry):
     nome_mes = MESES[mes_atual - 1]
 
     frame_cabecalho_calendario = ctk.CTkFrame (toplevel_calendario,
-        width = 280,
+        width = 300,
         height = 40,
         fg_color = "#577B54")
 
@@ -259,14 +259,14 @@ def abrir_calendario(entry):
         hover = False,
         fg_color = "transparent")
 
-    botao_cabecalho_retornar.pack (side = "left", padx = (50,20))
+    botao_cabecalho_retornar.pack (side = "left", padx = (40,20))
 
     label_cabecalho = ctk.CTkLabel (frame_cabecalho_calendario,
         text = f"{nome_mes} {ano_atual}",
         text_color = "#000000",
         font = ("Roboto", 12, "bold"))
 
-    label_cabecalho.pack (side = "left")
+    label_cabecalho.pack (side = "left", padx = 30)
 
     botao_cabecalho_avancar = ctk.CTkButton (frame_cabecalho_calendario,
             text = ">",
@@ -276,19 +276,52 @@ def abrir_calendario(entry):
             hover = False,
             fg_color = "transparent")
     
-    botao_cabecalho_avancar.pack (side = "left", padx = (20,50))
+    botao_cabecalho_avancar.pack (side = "left", padx = (20,30))
 
     frame_calendario = ctk.CTkFrame (toplevel_calendario,
-        width = 280,
-        height = 160,
         fg_color = COR_FUNDO)
 
     frame_calendario.pack (fill = "both", expand = True)
 
     frame_calendario.pack_propagate (False)
 
+    frame_dias_semana = ctk.CTkFrame (frame_calendario,
+        width = 300,
+        height = 40,
+        fg_color = COR_FUNDO)
+
+    frame_dias_semana.pack (fill = "x")
+
+    frame_dias_semana.pack_propagate (False)
+
+    for coluna, dia in enumerate(DIAS_SEMANA):
+        label_dias_semana = ctk.CTkLabel (frame_dias_semana,
+            text = dia,
+            text_color =  "#000000",
+            font = ("Roboto", 10, "normal")
+        )
+
+        label_dias_semana.grid (row = 0, column = coluna, padx = 12)
+
+    frame_dias_mes = ctk.CTkFrame (frame_calendario,
+        fg_color = COR_FUNDO)
+
+    frame_dias_mes.pack (fill = "both", expand = True)
+
+    frame_dias_mes.pack_propagate (False)
+
+
+
+
+
+
+
+
+
+
+
     frame_rodape_calendario = ctk.CTkFrame (toplevel_calendario,
-        width = 280,
+        width = 300,
         height = 40,
         fg_color = "#577B54")
 
@@ -530,6 +563,16 @@ MESES = [
     "Outubro",
     "Novembro",
     "Dezembro",
+]
+
+DIAS_SEMANA = [
+    "Seg",
+    "Ter",
+    "Qua",
+    "Qui",
+    "Sex",
+    "Sáb",
+    "Dom"
 ]
 
 ## VÁRIAVEIS DE ESTADO
