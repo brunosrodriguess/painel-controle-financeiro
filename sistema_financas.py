@@ -2,6 +2,7 @@ import customtkinter as ctk
 from tkinter import messagebox, ttk
 import banco_dados
 from datetime import datetime
+import calendar
 
 # CONFIGURAÇÕES
 
@@ -242,12 +243,14 @@ def abrir_calendario(entry):
     ano_atual = hoje.year
     nome_mes = MESES[mes_atual - 1]
 
+    coluna_inicial, quantidade_dias = calendar.monthrange(ano_atual, mes_atual)
+
     frame_cabecalho_calendario = ctk.CTkFrame (toplevel_calendario,
         width = 300,
         height = 40,
         fg_color = "#577B54")
 
-    frame_cabecalho_calendario.pack (fill = "x")
+    frame_cabecalho_calendario.pack ()
 
     frame_cabecalho_calendario.pack_propagate (False)
 
@@ -279,15 +282,17 @@ def abrir_calendario(entry):
     botao_cabecalho_avancar.pack (side = "left", padx = (20,30))
 
     frame_calendario = ctk.CTkFrame (toplevel_calendario,
+        width = 300,
+        height = 180,
         fg_color = COR_FUNDO)
 
-    frame_calendario.pack (fill = "both", expand = True)
+    frame_calendario.pack ()
 
     frame_calendario.pack_propagate (False)
 
     frame_dias_semana = ctk.CTkFrame (frame_calendario,
         width = 300,
-        height = 40,
+        height = 50,
         fg_color = COR_FUNDO)
 
     frame_dias_semana.pack (fill = "x")
@@ -310,6 +315,30 @@ def abrir_calendario(entry):
 
     frame_dias_mes.pack_propagate (False)
 
+    linha = 0
+    coluna = coluna_inicial
+
+    for dia in range (1, quantidade_dias + 1):
+        botao_dias_mes = ctk.CTkButton (frame_dias_mes,
+        width = 4,
+        height = 4,
+        text = dia,
+        text_color = "#000000",
+        font = ("Roboto", 9, "normal"),
+        hover_color = "#89BD84",
+        fg_color = "transparent",
+        corner_radius = 15
+        )
+
+        botao_dias_mes.grid (row = linha, column = coluna, padx = 12, pady = 6)
+
+        coluna += 1
+
+        if coluna > 6:
+            coluna = 0
+            linha += 1
+
+
 
 
 
@@ -322,10 +351,10 @@ def abrir_calendario(entry):
 
     frame_rodape_calendario = ctk.CTkFrame (toplevel_calendario,
         width = 300,
-        height = 40,
+        height = 30,
         fg_color = "#577B54")
 
-    frame_rodape_calendario.pack (fill = "x")
+    frame_rodape_calendario.pack ()
 
     frame_rodape_calendario.pack_propagate (False)
 
