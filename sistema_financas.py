@@ -227,8 +227,21 @@ def aplicar_mascara_valor (event):
 
 # FUNÇÃO ABRIR CALENDÁRIO JANELA GRÁFICOS
 
-def abrir_calendario(entry):
+def abrir_calendario (entry):
     global toplevel_calendario
+    global mes_calendario
+    global ano_calendario
+
+    global frame_cabecalho_calendario
+
+    if mes_calendario is None:
+        hoje = datetime.today()
+        mes_calendario = hoje.month
+        ano_calendario = hoje.year
+
+    nome_mes = MESES[mes_calendario - 1]
+
+    coluna_inicial, quantidade_dias = calendar.monthrange(ano_calendario, mes_calendario)
 
     if toplevel_calendario is not None:
         toplevel_calendario.destroy()
@@ -237,13 +250,6 @@ def abrir_calendario(entry):
     toplevel_calendario.geometry ("300x260")
     toplevel_calendario.resizable (False, False)
     toplevel_calendario.title ("Calendário")
-
-    hoje = datetime.today()
-    mes_atual = hoje.month
-    ano_atual = hoje.year
-    nome_mes = MESES[mes_atual - 1]
-
-    coluna_inicial, quantidade_dias = calendar.monthrange(ano_atual, mes_atual)
 
     frame_cabecalho_calendario = ctk.CTkFrame (toplevel_calendario,
         width = 300,
@@ -260,12 +266,13 @@ def abrir_calendario(entry):
         width = LARGURA_BOTAO_CALENDARIO_RETORNAR,
         height = ALTURA_BOTAO_CALENDARIO_RETORNAR,
         hover = False,
-        fg_color = "transparent")
+        fg_color = "transparent",
+        command = retornar_mes)
 
     botao_cabecalho_retornar.pack (side = "left", padx = (40,20))
 
     label_cabecalho = ctk.CTkLabel (frame_cabecalho_calendario,
-        text = f"{nome_mes} {ano_atual}",
+        text = f"{nome_mes} {ano_calendario}",
         text_color = "#000000",
         font = ("Roboto", 12, "bold"))
 
@@ -277,7 +284,8 @@ def abrir_calendario(entry):
             width = LARGURA_BOTAO_CALENDARIO_RETORNAR,
             height = ALTURA_BOTAO_CALENDARIO_RETORNAR,
             hover = False,
-            fg_color = "transparent")
+            fg_color = "transparent",
+            command = avancar_mes)
     
     botao_cabecalho_avancar.pack (side = "left", padx = (20,30))
 
@@ -338,17 +346,6 @@ def abrir_calendario(entry):
             coluna = 0
             linha += 1
 
-
-
-
-
-
-
-
-
-
-
-
     frame_rodape_calendario = ctk.CTkFrame (toplevel_calendario,
         width = 300,
         height = 30,
@@ -357,6 +354,63 @@ def abrir_calendario(entry):
     frame_rodape_calendario.pack ()
 
     frame_rodape_calendario.pack_propagate (False)
+
+def avancar_mes():
+    global mes_calendario
+    global ano_calendario
+
+    mes_calendario += 1
+
+    if mes_calendario > 12:
+        mes_calendario = 1
+        ano_calendario += 1
+
+    print(mes_calendario, ano_calendario)
+
+def retornar_mes():
+    global mes_calendario
+    global ano_calendario
+
+    mes_calendario -= 1
+
+    if mes_calendario < 1:
+        mes_calendario = 12
+        ano_calendario -= 1
+
+    print(mes_calendario, ano_calendario)
+
+    desenhar_calendario()
+
+def desenhar_calendario(frame_dias_mes, coluna_inicial, quantidade_dias):
+    global frame_cabecalho_calendario
+
+    for widget in frame_dias_mes.winfo_children():
+        widget.destroy()
+
+    linha = 0
+    coluna = coluna_inicial
+    
+    for dia in range (1, quantidade_dias + 1):
+        botao_dias_mes = ctk.CTkButton (frame_dias_mes,
+        width = 4,
+        height = 4,
+        text = dia,
+        text_color = "#000000",
+        font = ("Roboto", 9, "normal"),
+        hover_color = "#89BD84",
+        fg_color = "transparent",
+        corner_radius = 15)
+    
+        botao_dias_mes.grid (row = linha, column = coluna, padx = 12, pady = 6)
+    
+        coluna += 1
+    
+        if coluna > 6:
+            coluna = 0
+            linha += 1
+
+
+
 
 # PALETA DE CORES
 
@@ -608,6 +662,8 @@ DIAS_SEMANA = [
 
 id_lancamento_selecionado = None
 toplevel_calendario = None
+mes_calendario = None
+ano_calendario = None
 
 # JANELA PRINCIPAL
 
